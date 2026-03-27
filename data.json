@@ -1,0 +1,1768 @@
+{
+  "summary": {
+    "reportDate": "2026-03-27",
+    "weekLabel": "Week of March 23, 2026",
+    "generatedAt": "2026-03-27T20:58:25.922Z",
+    "totalClients": 24,
+    "statusBreakdown": {
+      "on_track": 3,
+      "at_risk": 9,
+      "stalled": 7,
+      "expanding": 5
+    },
+    "avgHealthScore": 57,
+    "totalOpenTickets": 98,
+    "totalHighPriorityTickets": 10,
+    "clientsWithBlockers": 14,
+    "clientsWithNoSlackActivity7d": 12,
+    "csmBreakdown": {
+      "Diane Lembo": {
+        "clients": 1,
+        "avgHealth": 62,
+        "atRisk": 0
+      },
+      "Sarah Fehrs": {
+        "clients": 11,
+        "avgHealth": 58,
+        "atRisk": 3
+      },
+      "Andrea Bonfiglio": {
+        "clients": 5,
+        "avgHealth": 52,
+        "atRisk": 3
+      },
+      "Nils Eigenbrod": {
+        "clients": 2,
+        "avgHealth": 43,
+        "atRisk": 2
+      },
+      "Georgina West": {
+        "clients": 5,
+        "avgHealth": 62,
+        "atRisk": 1
+      }
+    },
+    "dashboardUrl": "https://christophermackinnon-beep.github.io/zeotap-client-insights/",
+    "googleDocId": "15fEDf_gHtoZ6j24MRmWtjSIwgM3kwsG3fej4pEDtULY"
+  },
+  "clients": [
+    {
+      "clientName": "McDonald's - ES",
+      "clientSlug": "mcdonalds-es",
+      "csm": {
+        "name": "Diane Lembo"
+      },
+      "tam": {
+        "name": "Ilaria Guindani"
+      },
+      "owner": "Diane Lembo",
+      "status": "stalled",
+      "healthScore": 62,
+      "narrative": "McDonald's ES is in a quiet period with all tickets closed and no Slack activity in the dedicated channel this week. A renewal worth €67.6K is in negotiation stage. Cross-channel mentions indicate ongoing discussions about standardizing activation flows.",
+      "urgentPriorities": [
+        "Follow up on renewal negotiation (€67.6K, closes 31/05/2026)"
+      ],
+      "blockers": [],
+      "highlights": [
+        "All 34 tickets closed — clean support pipeline",
+        "Renewal deal active in negotiation"
+      ],
+      "lowlights": [
+        "Zero Slack activity in dedicated channel for 7+ days",
+        "No engagement signals this week"
+      ],
+      "prioritiesNextWeek": [
+        "Re-engage client via CSM check-in",
+        "Prepare renewal discussion points"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 34,
+          "open": 0,
+          "highOpen": 0,
+          "updatedThisWeek": 0
+        },
+        "deals": [
+          {
+            "name": "McDonald's - ES - Renewal - 31/05/2026",
+            "stage": "Negotiation",
+            "amount": 67570,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 0,
+        "daysSinceLastMessage": ">7",
+        "escalationSignals": [],
+        "keyTopics": []
+      },
+      "crossChannel": {
+        "mentions": 1,
+        "channels": [
+          "#csm-tam-product"
+        ],
+        "summary": "General discussion about standardizing activation flows"
+      }
+    },
+    {
+      "clientName": "SuperVista AG",
+      "clientSlug": "supervista-ag",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Raj Cheemakurti"
+      },
+      "owner": "Peter Mielke",
+      "status": "stalled",
+      "healthScore": 58,
+      "narrative": "SuperVista AG has 2 open tickets in development and no Slack activity this week. An early renewal and event usage upsell (€30K) are active alongside the main €130K renewal. Low engagement suggests the account needs proactive outreach.",
+      "urgentPriorities": [
+        "Push upsell on Event Usage (€30K)"
+      ],
+      "blockers": [],
+      "highlights": [
+        "Active renewal (€130K) in tracking stage",
+        "Event usage upsell opportunity (€30K)"
+      ],
+      "lowlights": [
+        "No Slack activity for 7+ days",
+        "2 open tickets in dev with no updates this week"
+      ],
+      "prioritiesNextWeek": [
+        "Schedule check-in with client",
+        "Review open tickets progress"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 54,
+          "open": 2,
+          "highOpen": 0,
+          "updatedThisWeek": 0,
+          "openTickets": [
+            "Bird: Journeys (in dev)",
+            "Create birthday mailing (in dev)"
+          ]
+        },
+        "deals": [
+          {
+            "name": "SuperVista AG - CDP - Renewal",
+            "stage": "Tracking",
+            "amount": 130000,
+            "active": true
+          },
+          {
+            "name": "SuperVista AG - Early renewal & upsell on EVENT USAGE",
+            "stage": "Pending Upsell",
+            "amount": 30000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 0,
+        "daysSinceLastMessage": ">7",
+        "escalationSignals": [],
+        "keyTopics": []
+      },
+      "crossChannel": {
+        "mentions": 0,
+        "channels": [],
+        "summary": "No mentions this week"
+      }
+    },
+    {
+      "clientName": "Sky - IT",
+      "clientSlug": "sky-it",
+      "csm": {
+        "name": "Andrea Bonfiglio"
+      },
+      "tam": {
+        "name": "Ilaria Guindani"
+      },
+      "owner": "Andrea Bonfiglio",
+      "status": "at_risk",
+      "healthScore": 48,
+      "narrative": "Sky IT is highly active but under significant pressure. A P0 audience refresh issue was escalated directly to Diane, and there are trust concerns about Product team delivery timelines. The daylight time change deployment requires urgent Sunday intervention. Multiple upsell deals (€453K total) are in various stages.",
+      "urgentPriorities": [
+        "P0 - Audiences do not refresh as scheduled (escalated to Diane)",
+        "Sunday daylight time change deployment + client verification",
+        "QBR April 15 with Martech — need alignment on promises"
+      ],
+      "blockers": [
+        "Product trust/confidence issues — post-sales team can't rely on Product releases",
+        "Martech delaying execution, risk of overpromising Q2 features"
+      ],
+      "highlights": [
+        "€242.6K renewal active in tracking",
+        "5 active upsell deals totaling €453K",
+        "20 Slack messages this week — highly engaged"
+      ],
+      "lowlights": [
+        "1 HIGH priority open ticket",
+        "P0 audience refresh failure escalated by client",
+        "Risk: selling the moon — promising features that slip"
+      ],
+      "prioritiesNextWeek": [
+        "QBR prep for April 15",
+        "Accenture working group for paid media alignment",
+        "Zeopulse + AI Playground timeline response"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 620,
+          "open": "many",
+          "highOpen": 1,
+          "updatedThisWeek": 5,
+          "recentOpen": [
+            "P1 - Sky | Copernico - Time Change (MEDIUM)",
+            "Refresh Audiences",
+            "sFTP enhancement - Static Public Key"
+          ]
+        },
+        "deals": [
+          {
+            "name": "Sky - IT - CDP Premium;ID Extension - Renewal - 2027",
+            "stage": "Tracking",
+            "amount": 242593,
+            "active": true
+          },
+          {
+            "name": "Sky IT - Highway Data Speed",
+            "stage": "Closed-Won Upsell",
+            "amount": 145161,
+            "active": true
+          },
+          {
+            "name": "Sky IT - Paid Media - Upsell",
+            "stage": "Closed-Won Upsell",
+            "amount": 65124,
+            "active": true
+          },
+          {
+            "name": "Sky IT - Audience Boost - Upsell",
+            "stage": "Pending Upsell",
+            "amount": 52800,
+            "active": true
+          },
+          {
+            "name": "Sky IT - Highway Data Phase II - Upsell",
+            "stage": "Pending Upsell",
+            "amount": 150000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 20,
+        "daysSinceLastMessage": 0,
+        "lastMessageTimestamp": "2026-03-27T18:31:54Z",
+        "escalationSignals": [
+          "P0 - Audiences do not refresh",
+          "Urgent intervention Sunday for time change",
+          "Risk: selling the moon"
+        ],
+        "keyTopics": [
+          "Daylight time change deployment",
+          "QBR April 15 with Martech",
+          "Martech alignment issues",
+          "Workspace beta request",
+          "Accenture working group",
+          "Infosum integration",
+          "Sprint activities",
+          "Zeopulse + AI Playground"
+        ]
+      },
+      "crossChannel": {
+        "mentions": 7,
+        "channels": [
+          "#csm-tam-product",
+          "DM Diane/Chris/Elad"
+        ],
+        "summary": "Ilaria requested Interact SDK enablement. Diane flagged trust/confidence issues with Product team in DM with Chris and Elad."
+      }
+    },
+    {
+      "clientName": "Signal Iduna",
+      "clientSlug": "signal-iduna",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "expanding",
+      "healthScore": 68,
+      "narrative": "Signal Iduna has multiple active upsell deals in the pipeline (Complex Data, Journeys, APIs, Customer Services) alongside a €283K renewal. Slack is quiet this week but the expansion momentum is strong with 5 active deals.",
+      "urgentPriorities": [
+        "Progress Complex Data + Journeys upsell (€80K + €34.8K)"
+      ],
+      "blockers": [],
+      "highlights": [
+        "5 active deals including €283K renewal",
+        "Multiple upsell products in pipeline (Journeys, APIs, Customer Services)",
+        "Only 1 open ticket — stable support"
+      ],
+      "lowlights": [
+        "No Slack activity for 7+ days",
+        "No engagement this week"
+      ],
+      "prioritiesNextWeek": [
+        "Review Edit Source Alerts ticket progress",
+        "Follow up on upsell pipeline"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 34,
+          "open": 1,
+          "highOpen": 0,
+          "updatedThisWeek": 1,
+          "openTickets": [
+            "Edit Source Alerts (updated 2026-03-26)"
+          ]
+        },
+        "deals": [
+          {
+            "name": "Signal Iduna - CDP Premium - Renewal - 2027",
+            "stage": "Tracking",
+            "amount": 283333,
+            "active": true
+          },
+          {
+            "name": "Signal Iduna - UPSELL - COMPLEX DATA, Journeys, API, CS",
+            "stage": "Pending Upsell",
+            "amount": 80000,
+            "active": true
+          },
+          {
+            "name": "Signal Iduna - UPSELL - JOURNEYS",
+            "stage": "Pending Upsell",
+            "amount": 34800,
+            "active": true
+          },
+          {
+            "name": "Signal Iduna - UPSELL - APIs SUITE",
+            "stage": "Pending Upsell",
+            "amount": 18560,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 0,
+        "daysSinceLastMessage": ">7",
+        "escalationSignals": [],
+        "keyTopics": []
+      },
+      "crossChannel": {
+        "mentions": 1,
+        "channels": [
+          "DM Chris/Diane"
+        ],
+        "summary": "Chris mentioned Signal Iduna in context of CSM time-saving automation ideas"
+      }
+    },
+    {
+      "clientName": "MediaMarktSaturn",
+      "clientSlug": "mediamarktsaturn",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Ilaria Guindani"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "at_risk",
+      "healthScore": 45,
+      "narrative": "MediaMarktSaturn has 10 open tickets including a P0 Journey Activation Failure on Responsys and a new Query Cost Estimation request. Despite a strong €555K renewal locked until 2030, the high open ticket count and a GA4 destination error signal operational strain. Slack is minimal.",
+      "urgentPriorities": [
+        "P0 Journey Activation Failure Responsys (stage 1, updated today)",
+        "GA4 destination error (MEDIUM, stage 2)"
+      ],
+      "blockers": [
+        "P0 Journey Activation Failure blocking Responsys campaigns"
+      ],
+      "highlights": [
+        "Long-term renewal secured through 2030 (€555K)",
+        "5 tickets updated this week showing active support"
+      ],
+      "lowlights": [
+        "10 open tickets — highest ratio of open to total (10/18)",
+        "P0 Journey Activation Failure on critical Responsys channel",
+        "Only 1 Slack message in 7 days"
+      ],
+      "prioritiesNextWeek": [
+        "Resolve P0 Responsys activation failure",
+        "Address GA4 destination error",
+        "Review sFTP enhancement + JOURNEYS deletion node requests"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 18,
+          "open": 10,
+          "highOpen": 0,
+          "mediumOpen": 1,
+          "updatedThisWeek": 5,
+          "recentOpen": [
+            "P0 Journey Activation Failure Responsys",
+            "GA4 destination error (MEDIUM)",
+            "Query Cost Estimation (new)",
+            "sFTP enhancement",
+            "JOURNEYS deletion node",
+            "Folder name unique"
+          ]
+        },
+        "deals": [
+          {
+            "name": "MediaMarktSaturn - Renewal - 04/07/2030",
+            "stage": "Tracking",
+            "amount": 555000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 1,
+        "daysSinceLastMessage": 2,
+        "keyTopics": [
+          "Shravan joined channel"
+        ]
+      },
+      "crossChannel": {
+        "mentions": 2,
+        "channels": [
+          "DMs"
+        ],
+        "summary": "Internal discussions about Mitch commission payout and Chang research handover"
+      }
+    },
+    {
+      "clientName": "Edeka - DE",
+      "clientSlug": "edeka-de",
+      "csm": {
+        "name": "Nils Eigenbrod"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "at_risk",
+      "healthScore": 42,
+      "narrative": "Edeka is under significant pressure with an URGENT ticket for missing aliases in Braze recently closed, but core issues persist — only 7K of 206K email addresses arrived in Braze, and NCE go-live was delayed. The couponing/loyalty platform integration has an April 1 deadline. 11 cross-channel mentions indicate high internal urgency.",
+      "urgentPriorities": [
+        "Couponing/loyalty platform integration questions due April 1",
+        "Braze audience delivery issue (only 7K of 206K emails)",
+        "NCE destinations transformation go-live delayed"
+      ],
+      "blockers": [
+        "NCE go-live release delayed — was supposed to be 2 weeks ago",
+        "Only 7K of 206K email addresses arrived in Braze"
+      ],
+      "highlights": [
+        "€298.5K renewal secured through 2029",
+        "8 tickets updated this week — active support engagement",
+        "URGENT Missing Aliases in Braze ticket resolved"
+      ],
+      "lowlights": [
+        "Massive Braze delivery gap (7K vs 206K expected)",
+        "NCE transformation release overdue",
+        "14 Slack messages with multiple escalation signals"
+      ],
+      "prioritiesNextWeek": [
+        "April 1 couponing/loyalty deadline — error handling, prioritization, delta uploads",
+        "Scale IP warming to 200k records",
+        "NDA for EDEKA Foodservice expansion"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 135,
+          "open": "many",
+          "highOpen": 0,
+          "urgentRecent": true,
+          "updatedThisWeek": 8,
+          "recentOpen": [
+            "NCE payload structure (new, stage 1)",
+            "Audience Refresh Trigger via NCE Update",
+            "SEGMENT-AUDIENCE advanced LAL scaling"
+          ],
+          "recentClosed": [
+            "Review Audience refresh (MEDIUM)",
+            "URGENT Missing Aliases in Braze",
+            "Pull schema update source 7090 (HIGH)"
+          ]
+        },
+        "deals": [
+          {
+            "name": "Edeka - DE - Renewal - 2029",
+            "stage": "Tracking",
+            "amount": 298527,
+            "active": true
+          },
+          {
+            "name": "Edeka - CDP Upsell Smartfields - DE",
+            "stage": "Proposal",
+            "amount": 55000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 14,
+        "daysSinceLastMessage": 3,
+        "lastMessageTimestamp": "2026-03-24T12:50:38Z",
+        "escalationSignals": [
+          "Only 7k of 206k email addresses arrived in Braze",
+          "NCE go-live release delayed"
+        ],
+        "keyTopics": [
+          "Braze audience delivery issue",
+          "NCE destinations transformation delay",
+          "Couponing/loyalty platform (April 1 deadline)",
+          "IP warming to 200k",
+          "NDA for EDEKA Foodservice"
+        ]
+      },
+      "crossChannel": {
+        "mentions": 11,
+        "channels": [
+          "#support-tam",
+          "#product-support-team-external",
+          "#cust-edeka-de",
+          "DM Diane/Chris/Elad"
+        ],
+        "summary": "Support-tam flagged URGENT ticket overdue. Product-support listed EDEKA newsletter and deletion audiences. Diane flagged trust/confidence issues with Product. NDA discussions for EDEKA Foodservice expansion."
+      }
+    },
+    {
+      "clientName": "Carrefour - ES",
+      "clientSlug": "carrefour-es",
+      "csm": {
+        "name": "Andrea Bonfiglio"
+      },
+      "tam": {
+        "name": "Ilaria Guindani"
+      },
+      "owner": "Andrea Bonfiglio",
+      "status": "stalled",
+      "healthScore": 58,
+      "narrative": "Carrefour ES is quiet this week with no Slack activity in the dedicated channel, though an URGENT ADFS Certificate Renewal ticket was recently closed. 16 cross-channel mentions are mostly from automated support pipeline digests. The €256K renewal is in tracking stage.",
+      "urgentPriorities": [
+        "Monitor ADFS certificate renewal completion (recently closed, still being updated)"
+      ],
+      "blockers": [],
+      "highlights": [
+        "URGENT ADFS Certificate Renewal resolved (closed 3/24)",
+        "€256K renewal in tracking stage"
+      ],
+      "lowlights": [
+        "No Slack activity in dedicated channel for 7+ days",
+        "16 cross-channel mentions mostly automated — low human engagement"
+      ],
+      "prioritiesNextWeek": [
+        "Verify ADFS cert renewal is fully complete",
+        "Re-engage client with proactive outreach"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 117,
+          "open": "several",
+          "highOpen": 0,
+          "updatedThisWeek": 1,
+          "recentClosed": [
+            "URGENT Carrefour ADFS Certificate Renewal (closed 3/24)"
+          ]
+        },
+        "deals": [
+          {
+            "name": "Carrefour - ES - CDP - Renewal",
+            "stage": "Tracking",
+            "amount": 256250,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 0,
+        "daysSinceLastMessage": ">7",
+        "escalationSignals": [],
+        "keyTopics": []
+      },
+      "crossChannel": {
+        "mentions": 16,
+        "channels": [
+          "#support-tam",
+          "DMs"
+        ],
+        "summary": "Support-tam flagged URGENT ADFS certificate renewal overdue. Mostly automated support pipeline reports."
+      }
+    },
+    {
+      "clientName": "Aktion Mensch DE",
+      "clientSlug": "aktion-mensch-de",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "stalled",
+      "healthScore": 55,
+      "narrative": "Aktion Mensch has limited visibility this week — the dedicated Slack channel returned an error, and ticket activity was minimal. A potential Convercus integration opportunity was flagged by Mitch. The €175K renewal is in tracking stage.",
+      "urgentPriorities": [
+        "Investigate Slack channel access issue (channel_not_found)"
+      ],
+      "blockers": [
+        "Slack channel not accessible — cannot monitor client communications"
+      ],
+      "highlights": [
+        "€175K renewal in tracking stage",
+        "Potential Convercus integration opportunity flagged"
+      ],
+      "lowlights": [
+        "Slack channel not found — visibility gap",
+        "Minimal ticket activity (1 update this week)"
+      ],
+      "prioritiesNextWeek": [
+        "Fix Slack channel access",
+        "Follow up on Convercus integration lead"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 41,
+          "open": "several",
+          "highOpen": 0,
+          "updatedThisWeek": 1,
+          "recentClosed": [
+            "Ingestion times on sandbox (MEDIUM, closed 3/23)"
+          ]
+        },
+        "deals": [
+          {
+            "name": "Aktion Mensch DE - Renewal",
+            "stage": "Tracking",
+            "amount": 175425,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": false,
+        "error": "channel_not_found"
+      },
+      "crossChannel": {
+        "mentions": 1,
+        "channels": [
+          "#cust-aktion-mensch-cdp"
+        ],
+        "summary": "Mitch flagged potential Convercus integration opportunity — Dominic Spindler reached out about Aktion Mensch's loyalty platform."
+      }
+    },
+    {
+      "clientName": "Entain Group",
+      "clientSlug": "entain-group",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "expanding",
+      "healthScore": 72,
+      "narrative": "Entain Group is in expansion mode with a massive €936K renewal and Sarah pushing for Amazon CAPI prioritization in #csm-tam-product. The account shows strong strategic alignment with active product requests.",
+      "urgentPriorities": [
+        "Amazon CAPI integration priority request"
+      ],
+      "blockers": [],
+      "highlights": [
+        "€936K renewal deal active",
+        "Amazon CAPI integration being pushed as priority",
+        "Strong CSM advocacy in internal channels"
+      ],
+      "lowlights": [
+        "Limited Slack activity in dedicated channel"
+      ],
+      "prioritiesNextWeek": [
+        "Follow up on Amazon CAPI prioritization",
+        "Renewal timeline alignment"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 45,
+          "open": 3,
+          "highOpen": 0,
+          "updatedThisWeek": 2
+        },
+        "deals": [
+          {
+            "name": "Entain Group - Renewal",
+            "stage": "Tracking",
+            "amount": 936000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 2,
+        "daysSinceLastMessage": 4
+      },
+      "crossChannel": {
+        "mentions": 3,
+        "channels": [
+          "#csm-tam-product"
+        ],
+        "summary": "Sarah pushing for Amazon CAPI priority"
+      }
+    },
+    {
+      "clientName": "Ford Motor Company - UK",
+      "clientSlug": "ford-motor-company-uk",
+      "csm": {
+        "name": "Georgina West"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Peter Mielke",
+      "status": "on_track",
+      "healthScore": 70,
+      "narrative": "Ford Motor Company UK is tracking steadily with moderate ticket activity and stable engagement. The account is in a maintenance phase with no significant escalations this week.",
+      "urgentPriorities": [],
+      "blockers": [],
+      "highlights": [
+        "Stable account with consistent engagement",
+        "No high-priority tickets"
+      ],
+      "lowlights": [
+        "Limited expansion activity"
+      ],
+      "prioritiesNextWeek": [
+        "Regular check-in with client",
+        "Identify upsell opportunities"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 28,
+          "open": 2,
+          "highOpen": 0,
+          "updatedThisWeek": 1
+        },
+        "deals": [
+          {
+            "name": "Ford Motor Company - UK - Renewal",
+            "stage": "Tracking",
+            "amount": 180000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 3,
+        "daysSinceLastMessage": 3
+      },
+      "crossChannel": {
+        "mentions": 1,
+        "channels": [
+          "#csm-tam-product"
+        ],
+        "summary": "Mentioned in activation flow standardization discussion"
+      }
+    },
+    {
+      "clientName": "FC Bayern München AG",
+      "clientSlug": "fc-bayern-munchen-ag",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "expanding",
+      "healthScore": 74,
+      "narrative": "FC Bayern is in expansion with a Smartfields + BYOM upsell worth €70K in proposal stage. A case study is being developed for marketing. The account shows strong product engagement and growth potential.",
+      "urgentPriorities": [
+        "Progress Smartfields + BYOM upsell (€70K)"
+      ],
+      "blockers": [],
+      "highlights": [
+        "€70K Smartfields + BYOM upsell in proposal stage",
+        "Case study in marketing-operational pipeline",
+        "Strong product adoption"
+      ],
+      "lowlights": [
+        "Limited dedicated channel activity this week"
+      ],
+      "prioritiesNextWeek": [
+        "Push Smartfields demo for upsell",
+        "Review case study draft"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 22,
+          "open": 1,
+          "highOpen": 0,
+          "updatedThisWeek": 1
+        },
+        "deals": [
+          {
+            "name": "FC Bayern - CDP - Renewal",
+            "stage": "Tracking",
+            "amount": 120000,
+            "active": true
+          },
+          {
+            "name": "FC Bayern - Smartfields + BYOM",
+            "stage": "Proposal",
+            "amount": 70000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 1,
+        "daysSinceLastMessage": 5
+      },
+      "crossChannel": {
+        "mentions": 2,
+        "channels": [
+          "#marketing-operational"
+        ],
+        "summary": "Case study being developed for FC Bayern"
+      }
+    },
+    {
+      "clientName": "Glovo",
+      "clientSlug": "glovo",
+      "csm": {
+        "name": "Andrea Bonfiglio"
+      },
+      "tam": {
+        "name": "Ilaria Guindani"
+      },
+      "owner": "Andrea Bonfiglio",
+      "status": "at_risk",
+      "healthScore": 46,
+      "narrative": "Glovo has 2 HIGH priority tickets open this week — a P1 DV360 audience not populated since March 13 and a new P1 TikTok audience push created today. These critical activation failures put key paid media campaigns at risk.",
+      "urgentPriorities": [
+        "P1 DV360 audience not populated (open since 3/13)",
+        "P1 TikTok audience push failure (new today 3/27)"
+      ],
+      "blockers": [
+        "DV360 audience not populating — impacting paid media campaigns",
+        "TikTok audience push failing"
+      ],
+      "highlights": [
+        "Active renewal in tracking stage"
+      ],
+      "lowlights": [
+        "2 HIGH priority tickets open simultaneously",
+        "Paid media activation failures on two major platforms"
+      ],
+      "prioritiesNextWeek": [
+        "Resolve DV360 and TikTok audience failures",
+        "Assess impact on active campaigns"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 38,
+          "open": 4,
+          "highOpen": 2,
+          "updatedThisWeek": 3
+        },
+        "deals": [
+          {
+            "name": "Glovo - CDP - Renewal",
+            "stage": "Tracking",
+            "amount": 150000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 5,
+        "daysSinceLastMessage": 1
+      },
+      "crossChannel": {
+        "mentions": 2,
+        "channels": [
+          "#support-tam"
+        ],
+        "summary": "Support flagged DV360 and TikTok activation failures"
+      }
+    },
+    {
+      "clientName": "TIM (Telecom Italia)",
+      "clientSlug": "tim-telecom-italia",
+      "csm": {
+        "name": "Andrea Bonfiglio"
+      },
+      "tam": {
+        "name": "Ilaria Guindani"
+      },
+      "owner": "Andrea Bonfiglio",
+      "status": "at_risk",
+      "healthScore": 50,
+      "narrative": "TIM is a complex account with RBAC requirements, Infosum integration architecture discussions, and a renewal tied to GCP negotiations. The account has active engagement but multiple open technical challenges. A €150K early renewal & upsell deal is in play.",
+      "urgentPriorities": [
+        "RBAC implementation requirements",
+        "Infosum integration architecture decisions",
+        "Renewal tied to GCP negotiations"
+      ],
+      "blockers": [
+        "Renewal timeline dependent on GCP contract negotiations"
+      ],
+      "highlights": [
+        "€150K early renewal & upsell deal active",
+        "Active technical engagement on integration architecture"
+      ],
+      "lowlights": [
+        "Complex dependencies slowing progress",
+        "Multiple parallel workstreams creating coordination challenges"
+      ],
+      "prioritiesNextWeek": [
+        "Advance Infosum integration",
+        "RBAC requirements finalization",
+        "GCP negotiation status update"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 95,
+          "open": 5,
+          "highOpen": 1,
+          "updatedThisWeek": 3
+        },
+        "deals": [
+          {
+            "name": "TIM - Early Renewal & Upsell",
+            "stage": "Negotiation",
+            "amount": 150000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 8,
+        "daysSinceLastMessage": 2
+      },
+      "crossChannel": {
+        "mentions": 4,
+        "channels": [
+          "#csm-tam-product",
+          "#support-tam"
+        ],
+        "summary": "RBAC and Infosum integration discussions. Audience data refresh P1 flagged as stale."
+      }
+    },
+    {
+      "clientName": "Sky - UK",
+      "clientSlug": "sky-uk",
+      "csm": {
+        "name": "Georgina West"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Peter Mielke",
+      "status": "expanding",
+      "healthScore": 65,
+      "narrative": "Sky UK is a massive account (€1.27M renewal) with very high ticket volume (485 total). The dedicated Slack channel was not found but cross-channel activity shows the account is actively discussed. Multiple product requests are in flight.",
+      "urgentPriorities": [
+        "Fix Slack channel access for monitoring"
+      ],
+      "blockers": [
+        "Dedicated Slack channel not accessible (channel_not_found)"
+      ],
+      "highlights": [
+        "€1.27M renewal — largest account by value",
+        "Active product engagement and feature requests"
+      ],
+      "lowlights": [
+        "485 total tickets — highest volume in portfolio",
+        "Slack channel not found — monitoring gap"
+      ],
+      "prioritiesNextWeek": [
+        "Resolve Slack channel access",
+        "Review P0 ticket pipeline"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 485,
+          "open": "many",
+          "highOpen": 2,
+          "updatedThisWeek": 4
+        },
+        "deals": [
+          {
+            "name": "Sky - UK - Renewal - 2026",
+            "stage": "Tracking",
+            "amount": 1270000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": false,
+        "error": "channel_not_found"
+      },
+      "crossChannel": {
+        "mentions": 5,
+        "channels": [
+          "#csm-tam-product",
+          "#support-ops"
+        ],
+        "summary": "Product requests and support discussions"
+      }
+    },
+    {
+      "clientName": "Coopvoce",
+      "clientSlug": "coopvoce",
+      "csm": {
+        "name": "Andrea Bonfiglio"
+      },
+      "tam": {
+        "name": "Ilaria Guindani"
+      },
+      "owner": "Andrea Bonfiglio",
+      "status": "stalled",
+      "healthScore": 60,
+      "narrative": "Coopvoce has moderate ticket activity with 21 total tickets. No deals were found in HubSpot search, which may indicate they are tracked under a parent company. Limited engagement signals this week.",
+      "urgentPriorities": [],
+      "blockers": [],
+      "highlights": [
+        "Moderate ticket volume — manageable support load"
+      ],
+      "lowlights": [
+        "No deals found in HubSpot",
+        "Limited engagement this week"
+      ],
+      "prioritiesNextWeek": [
+        "Verify deal tracking in HubSpot",
+        "Client engagement check-in"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 21,
+          "open": 2,
+          "highOpen": 0,
+          "updatedThisWeek": 1
+        },
+        "deals": []
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 0,
+        "daysSinceLastMessage": ">7"
+      },
+      "crossChannel": {
+        "mentions": 0,
+        "channels": [],
+        "summary": "No cross-channel mentions this week"
+      }
+    },
+    {
+      "clientName": "Breuninger - DE",
+      "clientSlug": "breuninger-de",
+      "csm": {
+        "name": "Nils Eigenbrod"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "at_risk",
+      "healthScore": 44,
+      "narrative": "Breuninger had an onsite visit on March 19 for a strategic partnership kickoff, but trust concerns were raised around DY integration frustrations. An URGENT match rate ticket (P01) has been in progress for 19 days. The relationship needs careful management.",
+      "urgentPriorities": [
+        "URGENT match rate ticket (P01) — 19 days in progress",
+        "Address DY integration frustration"
+      ],
+      "blockers": [
+        "URGENT P01 match rate ticket unresolved for 19 days",
+        "Trust concerns from client around DY integration"
+      ],
+      "highlights": [
+        "Onsite visit March 19 — strategic partnership kickoff",
+        "Active engagement from client stakeholders"
+      ],
+      "lowlights": [
+        "URGENT ticket open 19 days",
+        "Client trust concerns raised during onsite",
+        "DY integration frustration"
+      ],
+      "prioritiesNextWeek": [
+        "Resolve P01 match rate ticket urgently",
+        "Follow up on strategic partnership action items",
+        "Address DY integration concerns"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 35,
+          "open": 3,
+          "highOpen": 1,
+          "updatedThisWeek": 2
+        },
+        "deals": [
+          {
+            "name": "Breuninger - DE - CDP - Renewal",
+            "stage": "Tracking",
+            "amount": 120000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 6,
+        "daysSinceLastMessage": 2,
+        "escalationSignals": [
+          "URGENT match rate ticket",
+          "DY integration frustration"
+        ],
+        "keyTopics": [
+          "Onsite visit follow-up",
+          "Strategic partnership",
+          "DY integration",
+          "Match rate investigation"
+        ]
+      },
+      "crossChannel": {
+        "mentions": 3,
+        "channels": [
+          "#support-tam",
+          "#csm-tam-product"
+        ],
+        "summary": "Match rate ticket flagged as overdue. Trust concerns about DY integration discussed internally."
+      }
+    },
+    {
+      "clientName": "Kleinanzeigen (eBay)",
+      "clientSlug": "kleinanzeigen-ebay",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "at_risk",
+      "healthScore": 52,
+      "narrative": "Kleinanzeigen is very active with a HIGH data re-ingestion request (3/25), open Pubmatic audience inflation issue, and a PPID issue open for 132 days. Despite €541K renewal and €80K in upsells, the persistent technical issues create risk. Consent visibility discussions indicate growing data governance needs.",
+      "urgentPriorities": [
+        "Data re-ingestion request (HIGH, 3/25)",
+        "Pubmatic audiences inflated (MEDIUM, open)",
+        "PPID issue — 132 days open"
+      ],
+      "blockers": [
+        "PPID issue unresolved for 132 days — awaiting engineering"
+      ],
+      "highlights": [
+        "€541K renewal active",
+        "€80K in upsell pipeline",
+        "Active engagement with consent visibility discussions"
+      ],
+      "lowlights": [
+        "PPID issue open 132 days",
+        "Pubmatic audience inflation unresolved",
+        "HIGH data re-ingestion request this week"
+      ],
+      "prioritiesNextWeek": [
+        "Push PPID issue to resolution",
+        "Address Pubmatic audience inflation",
+        "Process data re-ingestion request"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 85,
+          "open": 5,
+          "highOpen": 1,
+          "updatedThisWeek": 4
+        },
+        "deals": [
+          {
+            "name": "Kleinanzeigen - CDP - Renewal",
+            "stage": "Tracking",
+            "amount": 541000,
+            "active": true
+          },
+          {
+            "name": "Kleinanzeigen - Upsells",
+            "stage": "Pending Upsell",
+            "amount": 80000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 10,
+        "daysSinceLastMessage": 1,
+        "keyTopics": [
+          "Data re-ingestion",
+          "Pubmatic audiences",
+          "PPID issue",
+          "Consent visibility"
+        ]
+      },
+      "crossChannel": {
+        "mentions": 5,
+        "channels": [
+          "#support-tam",
+          "#csm-tam-product"
+        ],
+        "summary": "PPID issue flagged as stale (132d). Data re-ingestion and Pubmatic inflation discussed."
+      }
+    },
+    {
+      "clientName": "BayWa r.e.",
+      "clientSlug": "baywa-re",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "at_risk",
+      "healthScore": 35,
+      "narrative": "BayWa r.e. is in financial crisis with a contract shortening agreed — removing year 4 results in a €209K reduction. CDP usage is limited and the client's financial situation creates significant retention risk.",
+      "urgentPriorities": [
+        "Process contract shortening (year 4 removal = -€209K)",
+        "Monitor client financial situation"
+      ],
+      "blockers": [
+        "Client financial crisis limiting CDP investment",
+        "Contract shortening agreed"
+      ],
+      "highlights": [
+        "Proactive contract restructuring maintains relationship"
+      ],
+      "lowlights": [
+        "Financial crisis impacting CDP usage",
+        "€209K revenue reduction from contract shortening",
+        "Limited platform adoption"
+      ],
+      "prioritiesNextWeek": [
+        "Finalize contract amendment",
+        "Identify minimum viable use cases to maintain engagement"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 12,
+          "open": 1,
+          "highOpen": 0,
+          "updatedThisWeek": 0
+        },
+        "deals": [
+          {
+            "name": "BayWa r.e. - CDP - Renewal (shortened)",
+            "stage": "Tracking",
+            "amount": 150000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 0,
+        "daysSinceLastMessage": ">7"
+      },
+      "crossChannel": {
+        "mentions": 1,
+        "channels": [
+          "DMs"
+        ],
+        "summary": "Financial crisis and contract shortening discussed internally"
+      }
+    },
+    {
+      "clientName": "Marktplaats",
+      "clientSlug": "marktplaats",
+      "csm": {
+        "name": "Georgina West"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Peter Mielke",
+      "status": "on_track",
+      "healthScore": 64,
+      "narrative": "Marktplaats is in active implementation with 2 overdue tickets flagged in #support-tam (Databricks data and Odin nested field). The implementation is progressing but these technical blockers need attention to stay on schedule.",
+      "urgentPriorities": [
+        "Resolve overdue Databricks data ticket",
+        "Fix Odin nested field issue"
+      ],
+      "blockers": [
+        "2 overdue tickets flagged in #support-tam"
+      ],
+      "highlights": [
+        "Active implementation progressing",
+        "Good engagement with TAM team"
+      ],
+      "lowlights": [
+        "2 overdue tickets in support-tam",
+        "Technical blockers on implementation"
+      ],
+      "prioritiesNextWeek": [
+        "Clear overdue tickets",
+        "Continue implementation milestones"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 30,
+          "open": 4,
+          "highOpen": 0,
+          "updatedThisWeek": 3
+        },
+        "deals": [
+          {
+            "name": "Marktplaats - CDP - Renewal",
+            "stage": "Tracking",
+            "amount": 200000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 5,
+        "daysSinceLastMessage": 2
+      },
+      "crossChannel": {
+        "mentions": 2,
+        "channels": [
+          "#support-tam"
+        ],
+        "summary": "2 overdue tickets flagged: Databricks data and Odin nested field"
+      }
+    },
+    {
+      "clientName": "Popken Fashion Group",
+      "clientSlug": "popken-fashion-group",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "on_track",
+      "healthScore": 68,
+      "narrative": "Popken Fashion Group is tracking steadily with low ticket volume and stable engagement. The account is in a maintenance phase with no significant escalations.",
+      "urgentPriorities": [],
+      "blockers": [],
+      "highlights": [
+        "Stable account with minimal support needs",
+        "Clean ticket pipeline"
+      ],
+      "lowlights": [
+        "Limited expansion activity"
+      ],
+      "prioritiesNextWeek": [
+        "Regular check-in",
+        "Identify growth opportunities"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 15,
+          "open": 1,
+          "highOpen": 0,
+          "updatedThisWeek": 0
+        },
+        "deals": [
+          {
+            "name": "Popken - CDP - Renewal",
+            "stage": "Tracking",
+            "amount": 85000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 0,
+        "daysSinceLastMessage": ">7"
+      },
+      "crossChannel": {
+        "mentions": 0,
+        "channels": [],
+        "summary": "No cross-channel mentions this week"
+      }
+    },
+    {
+      "clientName": "CTS Eventim",
+      "clientSlug": "cts-eventim",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "stalled",
+      "healthScore": 56,
+      "narrative": "CTS Eventim is an Ultra Care account in active implementation (NCE model on Braze — a first for Zeotap). The dedicated channel has no messages this week, but cross-channel shows 2 new product/integration requests (Journey Enhancement P0, Permission Object Sync to Braze). The implementation push from Feb/March is now in a quieter consolidation phase.",
+      "urgentPriorities": [
+        "P0 Product Request: Journey Enhancement - Wait for Condition & Re-trigger",
+        "Integration Request: Permission Object Sync to Braze EU"
+      ],
+      "blockers": [],
+      "highlights": [
+        "Ultra Care account with dedicated monitoring",
+        "First-ever NCE model on Braze implementation",
+        "Renewal secured through 2029",
+        "2 new product/integration requests submitted this week"
+      ],
+      "lowlights": [
+        "No Slack messages in dedicated channel this week",
+        "1 open ticket (Full Event History Data Export) lingering since Nov 2025"
+      ],
+      "prioritiesNextWeek": [
+        "Follow up on Braze NCE go-live status",
+        "Track P0 Journey Enhancement request",
+        "Permission Object Sync integration timeline"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 15,
+          "open": 1,
+          "highOpen": 0,
+          "updatedThisWeek": 1,
+          "openTickets": [
+            "INTEGRATE-SOURCES-Full Event History Data Export (updated 3/26)"
+          ]
+        },
+        "deals": [
+          {
+            "name": "CTS Eventim - Renewal - 31/12/2029",
+            "stage": "Tracking",
+            "amount": 0,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 0,
+        "daysSinceLastMessage": ">7",
+        "escalationSignals": [],
+        "keyTopics": []
+      },
+      "crossChannel": {
+        "mentions": 4,
+        "channels": [
+          "#product-and-integration-requests",
+          "DMs Chris/Sarah"
+        ],
+        "summary": "P0 Journey Enhancement request submitted. Permission Object Sync to Braze integration request. Status snapshot shared with Sarah by Chris. Ultra Care monitoring active."
+      }
+    },
+    {
+      "clientName": "Douglas - DE",
+      "clientSlug": "douglas-de",
+      "csm": {
+        "name": "Georgina West"
+      },
+      "tam": {
+        "name": "Raj Cheemakurti"
+      },
+      "owner": "Tobias Berghaus",
+      "status": "at_risk",
+      "healthScore": 38,
+      "narrative": "Douglas is an Ultra Care account under severe pressure with 2 URGENT open tickets (P0 Snowflake data pull for DE/AT/CH and BLOCKER deletion of P1 mapping in AT/PL/FR). The account has a history of being at risk of downgrading. A €272K renewal in negotiation and a €100K CDP Upgrade deal closing 3/31 need careful attention. 323 total tickets reflects the complexity of this multi-market account.",
+      "urgentPriorities": [
+        "P0 Data Pull for Snowflake Sources in DE, AT and CH (URGENT, open)",
+        "Douglas BLOCKER: Deletion of P1 Mapping in AT, PL, FR (URGENT, open)",
+        "€100K CDP Upgrade deal closing 3/31"
+      ],
+      "blockers": [
+        "URGENT P0 Snowflake data pull blocking DE/AT/CH markets",
+        "URGENT P1 mapping deletion blocking AT/PL/FR markets"
+      ],
+      "highlights": [
+        "Ultra Care account with dedicated critical monitoring channel",
+        "P0 Observation ticket closed 3/27 (HIGH)",
+        "TikTok match rates 125% ticket resolved",
+        "Stela confirmed fix starting with AT Snowflake sources"
+      ],
+      "lowlights": [
+        "2 URGENT tickets open simultaneously",
+        "323 total tickets — second highest in portfolio",
+        "No messages in dedicated channel since Oct 2025",
+        "Account historically at risk of downgrading to Emarsys + in-house"
+      ],
+      "prioritiesNextWeek": [
+        "Resolve both URGENT tickets",
+        "Close €100K CDP Upgrade deal by 3/31",
+        "Progress €272K renewal negotiation"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 323,
+          "open": "many",
+          "highOpen": 0,
+          "urgentOpen": 2,
+          "updatedThisWeek": 5,
+          "recentOpen": [
+            "P0 Data Pull for Snowflake Sources DE/AT/CH (URGENT)",
+            "Douglas BLOCKER: Deletion of P1 Mapping AT/PL/FR (URGENT)",
+            "Custom fields mapping change"
+          ],
+          "recentClosed": [
+            "P0 Observation of Audiences and Journeys (HIGH, closed 3/27)",
+            "TikTok match rates 125% (HIGH, closed 3/24)",
+            "P0 S1 Offline ingestion pull error (URGENT, closed 3/20)"
+          ]
+        },
+        "deals": [
+          {
+            "name": "Douglas - DE - CDP Premium;ID Extension - Renewal - 2026",
+            "stage": "Negotiation",
+            "amount": 272496,
+            "active": true
+          },
+          {
+            "name": "Douglas - CDP Upgrade - Over Consumption, IDx, NCE, ID5",
+            "stage": "Contract Sent",
+            "amount": 100000,
+            "active": true
+          },
+          {
+            "name": "Douglas - CDP - ID5/EUID Integration",
+            "stage": "Pending Upsell",
+            "amount": 43636,
+            "active": true
+          },
+          {
+            "name": "Douglas - CDP - NCE",
+            "stage": "Pending Upsell",
+            "amount": 60000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 0,
+        "daysSinceLastMessage": ">7",
+        "escalationSignals": [],
+        "keyTopics": []
+      },
+      "crossChannel": {
+        "mentions": 8,
+        "channels": [
+          "#support-tam",
+          "#douglas_critical_monitoring_updates",
+          "#product-support-team-external",
+          "DMs"
+        ],
+        "summary": "Support-tam: Stela confirmed starting AT Snowflake fix. Douglas critical monitoring alerts active. Product-support-team tracking Douglas alerts. Ultra Care pipeline digest mentions."
+      }
+    },
+    {
+      "clientName": "Virgin Media - UK",
+      "clientSlug": "virgin-media-uk",
+      "csm": {
+        "name": "Georgina West"
+      },
+      "tam": {
+        "name": "Shravan Maheshwaran"
+      },
+      "owner": "Peter Mielke",
+      "status": "expanding",
+      "healthScore": 72,
+      "narrative": "Virgin Media (VMO2) is a flagship account (€3.25M renewal) showing strong momentum. Braze is now live as a destination in production, Web Chat profile API approved for production use, and Optimizely personalization testing showed positive results. Multiple new channels are opening up for Zeotap value delivery.",
+      "urgentPriorities": [
+        "Product request: Fixed IP address for export (P1, due 3/31)",
+        "Resolve stale archived audiences in Profile API ticket (231 days)"
+      ],
+      "blockers": [
+        "P2 archived audiences appearing in Profile API — open 231 days"
+      ],
+      "highlights": [
+        "€3.25M renewal — largest account by value",
+        "Braze destination live in production!",
+        "Web Chat profile API approved for production",
+        "Optimizely personalization test showing positive results",
+        "Lucy Armitage from Commercial team meeting for Q2 Braze roadmap"
+      ],
+      "lowlights": [
+        "Stale ticket (archived audiences in Profile API) open 231 days",
+        "P1 fixed IP address request due 3/31"
+      ],
+      "prioritiesNextWeek": [
+        "Map Q2 audiences for Braze delivery",
+        "Web Chat production deployment",
+        "Follow up with Lucy Armitage on Commercial roadmap",
+        "Resolve fixed IP address request by 3/31"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 180,
+          "open": 4,
+          "highOpen": 0,
+          "updatedThisWeek": 2
+        },
+        "deals": [
+          {
+            "name": "Virgin Media - UK - Renewal - 2026",
+            "stage": "Tracking",
+            "amount": 3250000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": true,
+        "messagesThisWeek": 15,
+        "daysSinceLastMessage": 0,
+        "lastMessageTimestamp": "2026-03-27",
+        "keyTopics": [
+          "Braze destination live in production",
+          "Web Chat profile API approved",
+          "Optimizely personalization testing",
+          "Q2 Commercial roadmap",
+          "Accenture alignment"
+        ],
+        "escalationSignals": []
+      },
+      "crossChannel": {
+        "mentions": 6,
+        "channels": [
+          "#product-and-integration-requests",
+          "#support-tam",
+          "#csm-tam-product"
+        ],
+        "summary": "P1 product request for fixed IP address export. Stale archived audiences ticket flagged in support-tam. VMO2 mentioned in activation flow standardization."
+      }
+    },
+    {
+      "clientName": "REWE - DE",
+      "clientSlug": "rewe-de",
+      "csm": {
+        "name": "Sarah Fehrs"
+      },
+      "tam": {
+        "name": "Stela Yoncheva"
+      },
+      "owner": "Chang Won Hwang",
+      "status": "stalled",
+      "healthScore": 55,
+      "narrative": "REWE has a complex support history (258 total tickets) and an overdue ticket on audience consent logic flagged in #support-tam. The Slack channel returned an error, creating a monitoring gap. Sarah confirmed REWE doesn't have audience boost licensed. A new integration request for Elaine and attribute sharing discussions in #csm-tam-product show the client is actively seeking to expand CDP capabilities.",
+      "urgentPriorities": [
+        "Overdue ticket: Audience Consent Logic follow-up (flagged in #support-tam)",
+        "Attribute sharing request — client wants to share attributes with destinations"
+      ],
+      "blockers": [
+        "Slack channel not accessible (channel_not_found)",
+        "Consent logic ticket overdue — owner Vinamrutha, last activity 3/18"
+      ],
+      "highlights": [
+        "€249.6K renewal active through 2028",
+        "New integration request (Elaine-ENH) submitted",
+        "Attribute sharing request shows growing sophistication"
+      ],
+      "lowlights": [
+        "258 total tickets — high volume",
+        "Slack channel not found",
+        "Consent logic ticket overdue in #support-tam"
+      ],
+      "prioritiesNextWeek": [
+        "Fix Slack channel access",
+        "Push consent logic ticket to resolution",
+        "Follow up on attribute sharing request"
+      ],
+      "hubspot": {
+        "available": true,
+        "tickets": {
+          "total": 258,
+          "open": "several",
+          "highOpen": 0,
+          "updatedThisWeek": 2,
+          "recentOpen": [
+            "Audience Consent Logic follow-up (MEDIUM)",
+            "Taboola custom audiences (in dev)",
+            "Source alerts pause (feature request)"
+          ]
+        },
+        "deals": [
+          {
+            "name": "REWE - DE - Renewal - 30/12/2028",
+            "stage": "Tracking",
+            "amount": 249600,
+            "active": true
+          },
+          {
+            "name": "Rewe - CDP - UPSELL - JOURNEYS",
+            "stage": "Pending Upsell",
+            "amount": 45000,
+            "active": true
+          },
+          {
+            "name": "REWE - CDP - Event Usage for Penny",
+            "stage": "Pending Upsell",
+            "amount": 150000,
+            "active": true
+          },
+          {
+            "name": "Rewe - CDP DCR",
+            "stage": "Pending Upsell",
+            "amount": 35000,
+            "active": true
+          }
+        ]
+      },
+      "slack": {
+        "available": false,
+        "error": "channel_not_found"
+      },
+      "crossChannel": {
+        "mentions": 4,
+        "channels": [
+          "#support-tam",
+          "#csm-tam-product",
+          "#product-and-integration-requests"
+        ],
+        "summary": "Overdue consent logic ticket flagged. Sarah confirmed no audience boost. Attribute sharing request discussed. New Elaine integration request submitted."
+      }
+    }
+  ]
+}

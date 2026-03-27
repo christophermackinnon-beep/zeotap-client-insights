@@ -1,19 +1,955 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="utf-8">
-<title>Client Insights - Zeotap</title>
-<style>
-body { font-family: -apple-system, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f9f9ff; color: #143161; }
-.msg { text-align: center; }
-h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-p { color: #617aae; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Insights Dashboard</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            headline: ['Manrope', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              DEFAULT: '#0c56d0',
+              container: '#d8e2ff',
+              'on-container': '#001a41',
+              fixed: '#d8e2ff',
+              'fixed-dim': '#adc6ff',
+            },
+            secondary: {
+              DEFAULT: '#565e71',
+              container: '#dae2f9',
+              'on-container': '#131c2c',
+            },
+            tertiary: {
+              DEFAULT: '#6f5575',
+              container: '#f9d8fd',
+              'on-container': '#28132f',
+            },
+            surface: {
+              DEFAULT: '#f9f9ff',
+              dim: '#d8d9e0',
+              bright: '#f9f9ff',
+              container: {
+                lowest: '#ffffff',
+                low: '#f3f3fa',
+                DEFAULT: '#edeef5',
+                high: '#e7e8ef',
+                highest: '#e2e2e9',
+              },
+            },
+            'on-surface': {
+              DEFAULT: '#191c20',
+              variant: '#44474e',
+            },
+            outline: {
+              DEFAULT: '#74777f',
+              variant: '#c4c6d0',
+            },
+            error: {
+              DEFAULT: '#9f403d',
+              container: '#ffdad6',
+              'on-container': '#410002',
+            },
+            success: {
+              DEFAULT: '#386a20',
+              container: '#b9f198',
+              'on-container': '#072100',
+            },
+            warning: {
+              DEFAULT: '#7d5700',
+              container: '#ffdea6',
+              'on-container': '#271900',
+            },
+            info: {
+              DEFAULT: '#0c56d0',
+              container: '#d8e2ff',
+            },
+          },
+          boxShadow: {
+            card: '0 10px 30px rgba(20, 49, 97, 0.04)',
+            'card-hover': '0 14px 40px rgba(20, 49, 97, 0.08)',
+            header: '0 1px 3px rgba(20, 49, 97, 0.06)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9f9ff;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Manrope', sans-serif;
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .gradient-card {
+      background: linear-gradient(135deg, #0c56d0 0%, #3b7bea 50%, #6b9ff5 100%);
+    }
+    .progress-bar-track {
+      background: #e2e2e9;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .status-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .table-row {
+      transition: background-color 0.15s ease;
+    }
+    .table-row:hover {
+      background-color: #f3f3fa;
+    }
+    .sort-icon {
+      font-size: 16px;
+      opacity: 0.3;
+      transition: opacity 0.15s;
+      vertical-align: middle;
+      user-select: none;
+    }
+    .sort-icon.active {
+      opacity: 1;
+      color: #0c56d0;
+    }
+    th.sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+    th.sortable:hover .sort-icon {
+      opacity: 0.6;
+    }
+    .mobile-nav {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .mobile-nav {
+        display: flex;
+      }
+      .desktop-nav {
+        display: none;
+      }
+    }
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #0c56d0;
+    }
+    .filter-dropdown {
+      position: relative;
+    }
+    .filter-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      min-width: 200px;
+      z-index: 50;
+    }
+  </style>
 </head>
-<body>
-<div class="msg">
-<h1>Client Insights</h1>
-<p>Dashboard will be generated on the next skill run.</p>
-</div>
+<body class="min-h-screen pb-20 md:pb-0">
+
+  <!-- Fixed Glass Header -->
+  <header class="glass-header fixed top-0 left-0 right-0 z-50 shadow-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Brand -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-xl">insights</span>
+          </div>
+          <h1 class="text-lg font-headline font-bold text-on-surface">Client Insights</h1>
+        </div>
+
+        <!-- Desktop Nav -->
+        <nav class="desktop-nav hidden md:flex items-center gap-1">
+          <a href="#" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium bg-primary-container text-primary-on-container">
+            <span class="material-symbols-outlined text-lg">dashboard</span>
+            Dashboard
+          </a>
+          <a href="#" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-on-surface-variant hover:bg-surface-container-high transition-colors">
+            <span class="material-symbols-outlined text-lg">description</span>
+            Reports
+          </a>
+          <a href="#" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-on-surface-variant hover:bg-surface-container-high transition-colors">
+            <span class="material-symbols-outlined text-lg">settings</span>
+            Settings
+          </a>
+        </nav>
+
+        <!-- Right -->
+        <div class="flex items-center gap-3">
+          <button class="relative p-2 rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-colors" aria-label="Notifications">
+            <span class="material-symbols-outlined">notifications</span>
+            <span id="notif-badge" class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full hidden"></span>
+          </button>
+          <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary text-lg">person</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
+
+    <!-- Page Title Row -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-headline font-bold text-on-surface">Dashboard</h2>
+      <p id="week-label" class="text-sm text-on-surface-variant mt-1"></p>
+    </div>
+
+    <!-- Bento Summary Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+
+      <!-- Active Clients Card -->
+      <div class="bg-surface-container-lowest rounded-xl shadow-card p-6">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="material-symbols-outlined text-on-surface-variant text-xl">groups</span>
+          <span class="text-sm font-medium text-on-surface-variant">Active Clients</span>
+        </div>
+        <div class="flex items-end gap-3">
+          <span id="total-clients" class="text-4xl font-headline font-bold text-on-surface">--</span>
+          <span id="client-change" class="text-sm font-semibold mb-1 hidden"></span>
+        </div>
+        <p class="text-xs text-on-surface-variant mt-2">
+          <span id="open-tickets-summary" class="font-medium"></span>
+        </p>
+      </div>
+
+      <!-- Average Health Score Card (Gradient) -->
+      <div class="gradient-card rounded-xl shadow-card p-6 text-white">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="material-symbols-outlined text-white/80 text-xl">monitor_heart</span>
+          <span class="text-sm font-medium text-white/80">Average Health Score</span>
+        </div>
+        <div class="flex items-end gap-3">
+          <span id="avg-health" class="text-4xl font-headline font-bold">--</span>
+          <span class="text-lg font-semibold mb-1 text-white/70">%</span>
+        </div>
+        <div class="mt-3 w-full h-2 bg-white/20 rounded-full overflow-hidden">
+          <div id="avg-health-bar" class="h-full bg-white rounded-full transition-all duration-700" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Top Priorities Card -->
+      <div class="bg-surface-container-lowest rounded-xl shadow-card p-6">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="material-symbols-outlined text-on-surface-variant text-xl">priority_high</span>
+          <span class="text-sm font-medium text-on-surface-variant">Top Priorities</span>
+        </div>
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-on-surface-variant">At-Risk Clients</span>
+            <span id="priority-at-risk" class="text-sm font-bold text-error">--</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-on-surface-variant">High Priority Tickets</span>
+            <span id="priority-tickets" class="text-sm font-bold text-warning">--</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-on-surface-variant">Clients with Blockers</span>
+            <span id="priority-blockers" class="text-sm font-bold text-on-surface">--</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Cards Row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-surface-container-lowest rounded-xl shadow-card p-5 border-l-4 border-error">
+        <div class="flex items-center gap-1.5 mb-1">
+          <span class="material-symbols-outlined text-error text-lg">warning</span>
+          <span class="text-xs font-semibold text-error uppercase tracking-wide">At Risk</span>
+        </div>
+        <span id="status-at-risk" class="text-3xl font-headline font-bold text-on-surface">--</span>
+        <span class="text-xs text-on-surface-variant ml-1">clients</span>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl shadow-card p-5 border-l-4 border-warning">
+        <div class="flex items-center gap-1.5 mb-1">
+          <span class="material-symbols-outlined text-warning text-lg">pause_circle</span>
+          <span class="text-xs font-semibold text-warning uppercase tracking-wide">Stalled</span>
+        </div>
+        <span id="status-stalled" class="text-3xl font-headline font-bold text-on-surface">--</span>
+        <span class="text-xs text-on-surface-variant ml-1">clients</span>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl shadow-card p-5 border-l-4 border-success">
+        <div class="flex items-center gap-1.5 mb-1">
+          <span class="material-symbols-outlined text-success text-lg">check_circle</span>
+          <span class="text-xs font-semibold text-success uppercase tracking-wide">On Track</span>
+        </div>
+        <span id="status-on-track" class="text-3xl font-headline font-bold text-on-surface">--</span>
+        <span class="text-xs text-on-surface-variant ml-1">clients</span>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl shadow-card p-5 border-l-4 border-info">
+        <div class="flex items-center gap-1.5 mb-1">
+          <span class="material-symbols-outlined text-info text-lg">trending_up</span>
+          <span class="text-xs font-semibold text-info uppercase tracking-wide">Expanding</span>
+        </div>
+        <span id="status-expanding" class="text-3xl font-headline font-bold text-on-surface">--</span>
+        <span class="text-xs text-on-surface-variant ml-1">clients</span>
+      </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="bg-surface-container-lowest rounded-xl shadow-card p-6 mb-6">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary text-xl">summarize</span>
+        <h3 class="text-lg font-headline font-bold text-on-surface">Executive Summary</h3>
+      </div>
+      <p id="exec-summary" class="text-sm text-on-surface leading-relaxed"></p>
+    </div>
+
+    <!-- Top 5 Priorities + Glossary Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
+
+      <!-- Top 5 Priorities (2/3 width) -->
+      <div class="lg:col-span-2 bg-surface-container-lowest rounded-xl shadow-card p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="material-symbols-outlined text-error text-xl">flag</span>
+          <h3 class="text-lg font-headline font-bold text-on-surface">Top 5 Priorities This Week</h3>
+        </div>
+        <ol id="top-priorities-list" class="space-y-3"></ol>
+      </div>
+
+      <!-- Glossary (1/3 width) -->
+      <div class="bg-surface-container-low rounded-xl p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="material-symbols-outlined text-on-surface-variant text-xl">info</span>
+          <h3 class="text-sm font-headline font-bold text-on-surface uppercase tracking-wider">Glossary</h3>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <h4 class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Health Score (0–100)</h4>
+            <p class="text-xs text-on-surface-variant leading-relaxed">Weighted composite of 5 signals: Support Tickets (20%) — fewer HIGH tickets = better; Slack Activity (20%) — recent channel activity signals engagement; Onboarding Progress (30%) — Rocketlane task completion %; Engagement Recency (15%) — days since last email, meeting, or message; Blockers (15%) — fewer blockers = healthier. Sources that are unavailable have their weight redistributed.</p>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Onboarding %</h4>
+            <p class="text-xs text-on-surface-variant leading-relaxed">Percentage of Rocketlane project tasks completed. Reflects implementation progress across all phases. "N/A" means no Rocketlane project is linked to this client (e.g., they are already fully onboarded or use a different tracking system).</p>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Status</h4>
+            <p class="text-xs text-on-surface-variant leading-relaxed"><span class="font-semibold text-success">On Track</span> — Health ≥70, no HIGH tickets, active engagement. <span class="font-semibold text-error">At Risk</span> — Health &lt;50, or 2+ HIGH tickets, or silent 5+ days. <span class="font-semibold text-warning">Stalled</span> — Health 50–69, or silent 3–5 days, or 3+ overdue tasks. <span class="font-semibold text-info">Expanding</span> — Active upsell deal + Health ≥85.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Client Table Section -->
+    <div class="bg-surface-container-lowest rounded-xl shadow-card overflow-hidden">
+
+      <!-- Table Header Bar -->
+      <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h3 class="text-lg font-headline font-bold text-on-surface">Clients</h3>
+          <p id="table-subtitle" class="text-xs text-on-surface-variant mt-0.5">Showing 0 of 0 clients</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <!-- Search -->
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+            <input id="search-input" type="text" placeholder="Search clients..." class="search-input pl-9 pr-4 py-2 text-sm bg-surface-container rounded-xl border border-outline-variant/40 text-on-surface placeholder:text-on-surface-variant/60 w-52 transition-shadow">
+          </div>
+          <!-- CSM Filter -->
+          <div class="filter-dropdown">
+            <button id="csm-filter-btn" class="flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-xl border border-outline-variant/40 bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors">
+              <span class="material-symbols-outlined text-lg">filter_list</span>
+              <span id="csm-filter-label">All CSMs</span>
+              <span class="material-symbols-outlined text-lg">expand_more</span>
+            </button>
+            <div id="csm-filter-menu" class="filter-menu hidden bg-surface-container-lowest rounded-xl shadow-card-hover border border-outline-variant/30 overflow-hidden">
+              <div id="csm-filter-options" class="py-1 max-h-64 overflow-y-auto"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-outline-variant/30 bg-surface-container-low/50">
+              <th class="sortable px-6 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wider" data-sort="clientName">
+                Client Name <span class="material-symbols-outlined sort-icon">unfold_more</span>
+              </th>
+              <th class="sortable px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wider" data-sort="csm">
+                CSM <span class="material-symbols-outlined sort-icon">unfold_more</span>
+              </th>
+              <th class="sortable px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wider" data-sort="healthScore">
+                Health <span class="material-symbols-outlined sort-icon">unfold_more</span>
+              </th>
+              <th class="sortable px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wider" data-sort="status">
+                Status <span class="material-symbols-outlined sort-icon">unfold_more</span>
+              </th>
+              <th class="sortable px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wider" data-sort="tickets">
+                Open Tickets <span class="material-symbols-outlined sort-icon">unfold_more</span>
+              </th>
+              <th class="sortable px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wider" data-sort="onboarding">
+                Onboarding <span class="material-symbols-outlined sort-icon">unfold_more</span>
+              </th>
+              <th class="sortable px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wider" data-sort="lastActivity">
+                Last Activity <span class="material-symbols-outlined sort-icon">unfold_more</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="client-table-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination" class="px-6 py-4 border-t border-outline-variant/30 flex items-center justify-between">
+        <p id="pagination-info" class="text-xs text-on-surface-variant"></p>
+        <div id="pagination-controls" class="flex items-center gap-1"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-nav fixed bottom-0 left-0 right-0 bg-surface-container-lowest border-t border-outline-variant/30 z-50 justify-around items-center py-2">
+    <a href="#" class="flex flex-col items-center gap-0.5 px-4 py-1 text-primary">
+      <span class="material-symbols-outlined text-xl">dashboard</span>
+      <span class="text-[10px] font-medium">Dashboard</span>
+    </a>
+    <a href="#" class="flex flex-col items-center gap-0.5 px-4 py-1 text-on-surface-variant">
+      <span class="material-symbols-outlined text-xl">description</span>
+      <span class="text-[10px] font-medium">Reports</span>
+    </a>
+    <a href="#" class="flex flex-col items-center gap-0.5 px-4 py-1 text-on-surface-variant">
+      <span class="material-symbols-outlined text-xl">settings</span>
+      <span class="text-[10px] font-medium">Settings</span>
+    </a>
+  </nav>
+
+  <!-- Data Placeholder -->
+  <script>
+    const DATA = {"summary":{"reportDate":"2026-03-27","weekLabel":"Week of March 23, 2026","generatedAt":"2026-03-27T20:58:25.922Z","totalClients":24,"statusBreakdown":{"on_track":3,"at_risk":9,"stalled":7,"expanding":5},"avgHealthScore":57,"totalOpenTickets":98,"totalHighPriorityTickets":10,"clientsWithBlockers":14,"clientsWithNoSlackActivity7d":12,"csmBreakdown":{"Diane Lembo":{"clients":1,"avgHealth":62,"atRisk":0},"Sarah Fehrs":{"clients":11,"avgHealth":58,"atRisk":3},"Andrea Bonfiglio":{"clients":5,"avgHealth":52,"atRisk":3},"Nils Eigenbrod":{"clients":2,"avgHealth":43,"atRisk":2},"Georgina West":{"clients":5,"avgHealth":62,"atRisk":1}},"dashboardUrl":"https://christophermackinnon-beep.github.io/zeotap-client-insights/","googleDocId":"15fEDf_gHtoZ6j24MRmWtjSIwgM3kwsG3fej4pEDtULY"},"clients":[{"clientName":"McDonald's - ES","clientSlug":"mcdonalds-es","csm":{"name":"Diane Lembo"},"tam":{"name":"Ilaria Guindani"},"owner":"Diane Lembo","status":"stalled","healthScore":62,"narrative":"McDonald's ES is in a quiet period with all tickets closed and no Slack activity in the dedicated channel this week. A renewal worth €67.6K is in negotiation stage. Cross-channel mentions indicate ongoing discussions about standardizing activation flows.","urgentPriorities":["Follow up on renewal negotiation (€67.6K, closes 31/05/2026)"],"blockers":[],"highlights":["All 34 tickets closed — clean support pipeline","Renewal deal active in negotiation"],"lowlights":["Zero Slack activity in dedicated channel for 7+ days","No engagement signals this week"],"prioritiesNextWeek":["Re-engage client via CSM check-in","Prepare renewal discussion points"],"hubspot":{"available":true,"tickets":{"total":34,"open":0,"highOpen":0,"updatedThisWeek":0},"deals":[{"name":"McDonald's - ES - Renewal - 31/05/2026","stage":"Negotiation","amount":67570,"active":true}]},"slack":{"available":true,"messagesThisWeek":0,"daysSinceLastMessage":">7","escalationSignals":[],"keyTopics":[]},"crossChannel":{"mentions":1,"channels":["#csm-tam-product"],"summary":"General discussion about standardizing activation flows"}},{"clientName":"SuperVista AG","clientSlug":"supervista-ag","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Raj Cheemakurti"},"owner":"Peter Mielke","status":"stalled","healthScore":58,"narrative":"SuperVista AG has 2 open tickets in development and no Slack activity this week. An early renewal and event usage upsell (€30K) are active alongside the main €130K renewal. Low engagement suggests the account needs proactive outreach.","urgentPriorities":["Push upsell on Event Usage (€30K)"],"blockers":[],"highlights":["Active renewal (€130K) in tracking stage","Event usage upsell opportunity (€30K)"],"lowlights":["No Slack activity for 7+ days","2 open tickets in dev with no updates this week"],"prioritiesNextWeek":["Schedule check-in with client","Review open tickets progress"],"hubspot":{"available":true,"tickets":{"total":54,"open":2,"highOpen":0,"updatedThisWeek":0,"openTickets":["Bird: Journeys (in dev)","Create birthday mailing (in dev)"]},"deals":[{"name":"SuperVista AG - CDP - Renewal","stage":"Tracking","amount":130000,"active":true},{"name":"SuperVista AG - Early renewal & upsell on EVENT USAGE","stage":"Pending Upsell","amount":30000,"active":true}]},"slack":{"available":true,"messagesThisWeek":0,"daysSinceLastMessage":">7","escalationSignals":[],"keyTopics":[]},"crossChannel":{"mentions":0,"channels":[],"summary":"No mentions this week"}},{"clientName":"Sky - IT","clientSlug":"sky-it","csm":{"name":"Andrea Bonfiglio"},"tam":{"name":"Ilaria Guindani"},"owner":"Andrea Bonfiglio","status":"at_risk","healthScore":48,"narrative":"Sky IT is highly active but under significant pressure. A P0 audience refresh issue was escalated directly to Diane, and there are trust concerns about Product team delivery timelines. The daylight time change deployment requires urgent Sunday intervention. Multiple upsell deals (€453K total) are in various stages.","urgentPriorities":["P0 - Audiences do not refresh as scheduled (escalated to Diane)","Sunday daylight time change deployment + client verification","QBR April 15 with Martech — need alignment on promises"],"blockers":["Product trust/confidence issues — post-sales team can't rely on Product releases","Martech delaying execution, risk of overpromising Q2 features"],"highlights":["€242.6K renewal active in tracking","5 active upsell deals totaling €453K","20 Slack messages this week — highly engaged"],"lowlights":["1 HIGH priority open ticket","P0 audience refresh failure escalated by client","Risk: selling the moon — promising features that slip"],"prioritiesNextWeek":["QBR prep for April 15","Accenture working group for paid media alignment","Zeopulse + AI Playground timeline response"],"hubspot":{"available":true,"tickets":{"total":620,"open":"many","highOpen":1,"updatedThisWeek":5,"recentOpen":["P1 - Sky | Copernico - Time Change (MEDIUM)","Refresh Audiences","sFTP enhancement - Static Public Key"]},"deals":[{"name":"Sky - IT - CDP Premium;ID Extension - Renewal - 2027","stage":"Tracking","amount":242593,"active":true},{"name":"Sky IT - Highway Data Speed","stage":"Closed-Won Upsell","amount":145161,"active":true},{"name":"Sky IT - Paid Media - Upsell","stage":"Closed-Won Upsell","amount":65124,"active":true},{"name":"Sky IT - Audience Boost - Upsell","stage":"Pending Upsell","amount":52800,"active":true},{"name":"Sky IT - Highway Data Phase II - Upsell","stage":"Pending Upsell","amount":150000,"active":true}]},"slack":{"available":true,"messagesThisWeek":20,"daysSinceLastMessage":0,"lastMessageTimestamp":"2026-03-27T18:31:54Z","escalationSignals":["P0 - Audiences do not refresh","Urgent intervention Sunday for time change","Risk: selling the moon"],"keyTopics":["Daylight time change deployment","QBR April 15 with Martech","Martech alignment issues","Workspace beta request","Accenture working group","Infosum integration","Sprint activities","Zeopulse + AI Playground"]},"crossChannel":{"mentions":7,"channels":["#csm-tam-product","DM Diane/Chris/Elad"],"summary":"Ilaria requested Interact SDK enablement. Diane flagged trust/confidence issues with Product team in DM with Chris and Elad."}},{"clientName":"Signal Iduna","clientSlug":"signal-iduna","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"expanding","healthScore":68,"narrative":"Signal Iduna has multiple active upsell deals in the pipeline (Complex Data, Journeys, APIs, Customer Services) alongside a €283K renewal. Slack is quiet this week but the expansion momentum is strong with 5 active deals.","urgentPriorities":["Progress Complex Data + Journeys upsell (€80K + €34.8K)"],"blockers":[],"highlights":["5 active deals including €283K renewal","Multiple upsell products in pipeline (Journeys, APIs, Customer Services)","Only 1 open ticket — stable support"],"lowlights":["No Slack activity for 7+ days","No engagement this week"],"prioritiesNextWeek":["Review Edit Source Alerts ticket progress","Follow up on upsell pipeline"],"hubspot":{"available":true,"tickets":{"total":34,"open":1,"highOpen":0,"updatedThisWeek":1,"openTickets":["Edit Source Alerts (updated 2026-03-26)"]},"deals":[{"name":"Signal Iduna - CDP Premium - Renewal - 2027","stage":"Tracking","amount":283333,"active":true},{"name":"Signal Iduna - UPSELL - COMPLEX DATA, Journeys, API, CS","stage":"Pending Upsell","amount":80000,"active":true},{"name":"Signal Iduna - UPSELL - JOURNEYS","stage":"Pending Upsell","amount":34800,"active":true},{"name":"Signal Iduna - UPSELL - APIs SUITE","stage":"Pending Upsell","amount":18560,"active":true}]},"slack":{"available":true,"messagesThisWeek":0,"daysSinceLastMessage":">7","escalationSignals":[],"keyTopics":[]},"crossChannel":{"mentions":1,"channels":["DM Chris/Diane"],"summary":"Chris mentioned Signal Iduna in context of CSM time-saving automation ideas"}},{"clientName":"MediaMarktSaturn","clientSlug":"mediamarktsaturn","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Ilaria Guindani"},"owner":"Chang Won Hwang","status":"at_risk","healthScore":45,"narrative":"MediaMarktSaturn has 10 open tickets including a P0 Journey Activation Failure on Responsys and a new Query Cost Estimation request. Despite a strong €555K renewal locked until 2030, the high open ticket count and a GA4 destination error signal operational strain. Slack is minimal.","urgentPriorities":["P0 Journey Activation Failure Responsys (stage 1, updated today)","GA4 destination error (MEDIUM, stage 2)"],"blockers":["P0 Journey Activation Failure blocking Responsys campaigns"],"highlights":["Long-term renewal secured through 2030 (€555K)","5 tickets updated this week showing active support"],"lowlights":["10 open tickets — highest ratio of open to total (10/18)","P0 Journey Activation Failure on critical Responsys channel","Only 1 Slack message in 7 days"],"prioritiesNextWeek":["Resolve P0 Responsys activation failure","Address GA4 destination error","Review sFTP enhancement + JOURNEYS deletion node requests"],"hubspot":{"available":true,"tickets":{"total":18,"open":10,"highOpen":0,"mediumOpen":1,"updatedThisWeek":5,"recentOpen":["P0 Journey Activation Failure Responsys","GA4 destination error (MEDIUM)","Query Cost Estimation (new)","sFTP enhancement","JOURNEYS deletion node","Folder name unique"]},"deals":[{"name":"MediaMarktSaturn - Renewal - 04/07/2030","stage":"Tracking","amount":555000,"active":true}]},"slack":{"available":true,"messagesThisWeek":1,"daysSinceLastMessage":2,"keyTopics":["Shravan joined channel"]},"crossChannel":{"mentions":2,"channels":["DMs"],"summary":"Internal discussions about Mitch commission payout and Chang research handover"}},{"clientName":"Edeka - DE","clientSlug":"edeka-de","csm":{"name":"Nils Eigenbrod"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"at_risk","healthScore":42,"narrative":"Edeka is under significant pressure with an URGENT ticket for missing aliases in Braze recently closed, but core issues persist — only 7K of 206K email addresses arrived in Braze, and NCE go-live was delayed. The couponing/loyalty platform integration has an April 1 deadline. 11 cross-channel mentions indicate high internal urgency.","urgentPriorities":["Couponing/loyalty platform integration questions due April 1","Braze audience delivery issue (only 7K of 206K emails)","NCE destinations transformation go-live delayed"],"blockers":["NCE go-live release delayed — was supposed to be 2 weeks ago","Only 7K of 206K email addresses arrived in Braze"],"highlights":["€298.5K renewal secured through 2029","8 tickets updated this week — active support engagement","URGENT Missing Aliases in Braze ticket resolved"],"lowlights":["Massive Braze delivery gap (7K vs 206K expected)","NCE transformation release overdue","14 Slack messages with multiple escalation signals"],"prioritiesNextWeek":["April 1 couponing/loyalty deadline — error handling, prioritization, delta uploads","Scale IP warming to 200k records","NDA for EDEKA Foodservice expansion"],"hubspot":{"available":true,"tickets":{"total":135,"open":"many","highOpen":0,"urgentRecent":true,"updatedThisWeek":8,"recentOpen":["NCE payload structure (new, stage 1)","Audience Refresh Trigger via NCE Update","SEGMENT-AUDIENCE advanced LAL scaling"],"recentClosed":["Review Audience refresh (MEDIUM)","URGENT Missing Aliases in Braze","Pull schema update source 7090 (HIGH)"]},"deals":[{"name":"Edeka - DE - Renewal - 2029","stage":"Tracking","amount":298527,"active":true},{"name":"Edeka - CDP Upsell Smartfields - DE","stage":"Proposal","amount":55000,"active":true}]},"slack":{"available":true,"messagesThisWeek":14,"daysSinceLastMessage":3,"lastMessageTimestamp":"2026-03-24T12:50:38Z","escalationSignals":["Only 7k of 206k email addresses arrived in Braze","NCE go-live release delayed"],"keyTopics":["Braze audience delivery issue","NCE destinations transformation delay","Couponing/loyalty platform (April 1 deadline)","IP warming to 200k","NDA for EDEKA Foodservice"]},"crossChannel":{"mentions":11,"channels":["#support-tam","#product-support-team-external","#cust-edeka-de","DM Diane/Chris/Elad"],"summary":"Support-tam flagged URGENT ticket overdue. Product-support listed EDEKA newsletter and deletion audiences. Diane flagged trust/confidence issues with Product. NDA discussions for EDEKA Foodservice expansion."}},{"clientName":"Carrefour - ES","clientSlug":"carrefour-es","csm":{"name":"Andrea Bonfiglio"},"tam":{"name":"Ilaria Guindani"},"owner":"Andrea Bonfiglio","status":"stalled","healthScore":58,"narrative":"Carrefour ES is quiet this week with no Slack activity in the dedicated channel, though an URGENT ADFS Certificate Renewal ticket was recently closed. 16 cross-channel mentions are mostly from automated support pipeline digests. The €256K renewal is in tracking stage.","urgentPriorities":["Monitor ADFS certificate renewal completion (recently closed, still being updated)"],"blockers":[],"highlights":["URGENT ADFS Certificate Renewal resolved (closed 3/24)","€256K renewal in tracking stage"],"lowlights":["No Slack activity in dedicated channel for 7+ days","16 cross-channel mentions mostly automated — low human engagement"],"prioritiesNextWeek":["Verify ADFS cert renewal is fully complete","Re-engage client with proactive outreach"],"hubspot":{"available":true,"tickets":{"total":117,"open":"several","highOpen":0,"updatedThisWeek":1,"recentClosed":["URGENT Carrefour ADFS Certificate Renewal (closed 3/24)"]},"deals":[{"name":"Carrefour - ES - CDP - Renewal","stage":"Tracking","amount":256250,"active":true}]},"slack":{"available":true,"messagesThisWeek":0,"daysSinceLastMessage":">7","escalationSignals":[],"keyTopics":[]},"crossChannel":{"mentions":16,"channels":["#support-tam","DMs"],"summary":"Support-tam flagged URGENT ADFS certificate renewal overdue. Mostly automated support pipeline reports."}},{"clientName":"Aktion Mensch DE","clientSlug":"aktion-mensch-de","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"stalled","healthScore":55,"narrative":"Aktion Mensch has limited visibility this week — the dedicated Slack channel returned an error, and ticket activity was minimal. A potential Convercus integration opportunity was flagged by Mitch. The €175K renewal is in tracking stage.","urgentPriorities":["Investigate Slack channel access issue (channel_not_found)"],"blockers":["Slack channel not accessible — cannot monitor client communications"],"highlights":["€175K renewal in tracking stage","Potential Convercus integration opportunity flagged"],"lowlights":["Slack channel not found — visibility gap","Minimal ticket activity (1 update this week)"],"prioritiesNextWeek":["Fix Slack channel access","Follow up on Convercus integration lead"],"hubspot":{"available":true,"tickets":{"total":41,"open":"several","highOpen":0,"updatedThisWeek":1,"recentClosed":["Ingestion times on sandbox (MEDIUM, closed 3/23)"]},"deals":[{"name":"Aktion Mensch DE - Renewal","stage":"Tracking","amount":175425,"active":true}]},"slack":{"available":false,"error":"channel_not_found"},"crossChannel":{"mentions":1,"channels":["#cust-aktion-mensch-cdp"],"summary":"Mitch flagged potential Convercus integration opportunity — Dominic Spindler reached out about Aktion Mensch's loyalty platform."}},{"clientName":"Entain Group","clientSlug":"entain-group","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"expanding","healthScore":72,"narrative":"Entain Group is in expansion mode with a massive €936K renewal and Sarah pushing for Amazon CAPI prioritization in #csm-tam-product. The account shows strong strategic alignment with active product requests.","urgentPriorities":["Amazon CAPI integration priority request"],"blockers":[],"highlights":["€936K renewal deal active","Amazon CAPI integration being pushed as priority","Strong CSM advocacy in internal channels"],"lowlights":["Limited Slack activity in dedicated channel"],"prioritiesNextWeek":["Follow up on Amazon CAPI prioritization","Renewal timeline alignment"],"hubspot":{"available":true,"tickets":{"total":45,"open":3,"highOpen":0,"updatedThisWeek":2},"deals":[{"name":"Entain Group - Renewal","stage":"Tracking","amount":936000,"active":true}]},"slack":{"available":true,"messagesThisWeek":2,"daysSinceLastMessage":4},"crossChannel":{"mentions":3,"channels":["#csm-tam-product"],"summary":"Sarah pushing for Amazon CAPI priority"}},{"clientName":"Ford Motor Company - UK","clientSlug":"ford-motor-company-uk","csm":{"name":"Georgina West"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Peter Mielke","status":"on_track","healthScore":70,"narrative":"Ford Motor Company UK is tracking steadily with moderate ticket activity and stable engagement. The account is in a maintenance phase with no significant escalations this week.","urgentPriorities":[],"blockers":[],"highlights":["Stable account with consistent engagement","No high-priority tickets"],"lowlights":["Limited expansion activity"],"prioritiesNextWeek":["Regular check-in with client","Identify upsell opportunities"],"hubspot":{"available":true,"tickets":{"total":28,"open":2,"highOpen":0,"updatedThisWeek":1},"deals":[{"name":"Ford Motor Company - UK - Renewal","stage":"Tracking","amount":180000,"active":true}]},"slack":{"available":true,"messagesThisWeek":3,"daysSinceLastMessage":3},"crossChannel":{"mentions":1,"channels":["#csm-tam-product"],"summary":"Mentioned in activation flow standardization discussion"}},{"clientName":"FC Bayern München AG","clientSlug":"fc-bayern-munchen-ag","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"expanding","healthScore":74,"narrative":"FC Bayern is in expansion with a Smartfields + BYOM upsell worth €70K in proposal stage. A case study is being developed for marketing. The account shows strong product engagement and growth potential.","urgentPriorities":["Progress Smartfields + BYOM upsell (€70K)"],"blockers":[],"highlights":["€70K Smartfields + BYOM upsell in proposal stage","Case study in marketing-operational pipeline","Strong product adoption"],"lowlights":["Limited dedicated channel activity this week"],"prioritiesNextWeek":["Push Smartfields demo for upsell","Review case study draft"],"hubspot":{"available":true,"tickets":{"total":22,"open":1,"highOpen":0,"updatedThisWeek":1},"deals":[{"name":"FC Bayern - CDP - Renewal","stage":"Tracking","amount":120000,"active":true},{"name":"FC Bayern - Smartfields + BYOM","stage":"Proposal","amount":70000,"active":true}]},"slack":{"available":true,"messagesThisWeek":1,"daysSinceLastMessage":5},"crossChannel":{"mentions":2,"channels":["#marketing-operational"],"summary":"Case study being developed for FC Bayern"}},{"clientName":"Glovo","clientSlug":"glovo","csm":{"name":"Andrea Bonfiglio"},"tam":{"name":"Ilaria Guindani"},"owner":"Andrea Bonfiglio","status":"at_risk","healthScore":46,"narrative":"Glovo has 2 HIGH priority tickets open this week — a P1 DV360 audience not populated since March 13 and a new P1 TikTok audience push created today. These critical activation failures put key paid media campaigns at risk.","urgentPriorities":["P1 DV360 audience not populated (open since 3/13)","P1 TikTok audience push failure (new today 3/27)"],"blockers":["DV360 audience not populating — impacting paid media campaigns","TikTok audience push failing"],"highlights":["Active renewal in tracking stage"],"lowlights":["2 HIGH priority tickets open simultaneously","Paid media activation failures on two major platforms"],"prioritiesNextWeek":["Resolve DV360 and TikTok audience failures","Assess impact on active campaigns"],"hubspot":{"available":true,"tickets":{"total":38,"open":4,"highOpen":2,"updatedThisWeek":3},"deals":[{"name":"Glovo - CDP - Renewal","stage":"Tracking","amount":150000,"active":true}]},"slack":{"available":true,"messagesThisWeek":5,"daysSinceLastMessage":1},"crossChannel":{"mentions":2,"channels":["#support-tam"],"summary":"Support flagged DV360 and TikTok activation failures"}},{"clientName":"TIM (Telecom Italia)","clientSlug":"tim-telecom-italia","csm":{"name":"Andrea Bonfiglio"},"tam":{"name":"Ilaria Guindani"},"owner":"Andrea Bonfiglio","status":"at_risk","healthScore":50,"narrative":"TIM is a complex account with RBAC requirements, Infosum integration architecture discussions, and a renewal tied to GCP negotiations. The account has active engagement but multiple open technical challenges. A €150K early renewal & upsell deal is in play.","urgentPriorities":["RBAC implementation requirements","Infosum integration architecture decisions","Renewal tied to GCP negotiations"],"blockers":["Renewal timeline dependent on GCP contract negotiations"],"highlights":["€150K early renewal & upsell deal active","Active technical engagement on integration architecture"],"lowlights":["Complex dependencies slowing progress","Multiple parallel workstreams creating coordination challenges"],"prioritiesNextWeek":["Advance Infosum integration","RBAC requirements finalization","GCP negotiation status update"],"hubspot":{"available":true,"tickets":{"total":95,"open":5,"highOpen":1,"updatedThisWeek":3},"deals":[{"name":"TIM - Early Renewal & Upsell","stage":"Negotiation","amount":150000,"active":true}]},"slack":{"available":true,"messagesThisWeek":8,"daysSinceLastMessage":2},"crossChannel":{"mentions":4,"channels":["#csm-tam-product","#support-tam"],"summary":"RBAC and Infosum integration discussions. Audience data refresh P1 flagged as stale."}},{"clientName":"Sky - UK","clientSlug":"sky-uk","csm":{"name":"Georgina West"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Peter Mielke","status":"expanding","healthScore":65,"narrative":"Sky UK is a massive account (€1.27M renewal) with very high ticket volume (485 total). The dedicated Slack channel was not found but cross-channel activity shows the account is actively discussed. Multiple product requests are in flight.","urgentPriorities":["Fix Slack channel access for monitoring"],"blockers":["Dedicated Slack channel not accessible (channel_not_found)"],"highlights":["€1.27M renewal — largest account by value","Active product engagement and feature requests"],"lowlights":["485 total tickets — highest volume in portfolio","Slack channel not found — monitoring gap"],"prioritiesNextWeek":["Resolve Slack channel access","Review P0 ticket pipeline"],"hubspot":{"available":true,"tickets":{"total":485,"open":"many","highOpen":2,"updatedThisWeek":4},"deals":[{"name":"Sky - UK - Renewal - 2026","stage":"Tracking","amount":1270000,"active":true}]},"slack":{"available":false,"error":"channel_not_found"},"crossChannel":{"mentions":5,"channels":["#csm-tam-product","#support-ops"],"summary":"Product requests and support discussions"}},{"clientName":"Coopvoce","clientSlug":"coopvoce","csm":{"name":"Andrea Bonfiglio"},"tam":{"name":"Ilaria Guindani"},"owner":"Andrea Bonfiglio","status":"stalled","healthScore":60,"narrative":"Coopvoce has moderate ticket activity with 21 total tickets. No deals were found in HubSpot search, which may indicate they are tracked under a parent company. Limited engagement signals this week.","urgentPriorities":[],"blockers":[],"highlights":["Moderate ticket volume — manageable support load"],"lowlights":["No deals found in HubSpot","Limited engagement this week"],"prioritiesNextWeek":["Verify deal tracking in HubSpot","Client engagement check-in"],"hubspot":{"available":true,"tickets":{"total":21,"open":2,"highOpen":0,"updatedThisWeek":1},"deals":[]},"slack":{"available":true,"messagesThisWeek":0,"daysSinceLastMessage":">7"},"crossChannel":{"mentions":0,"channels":[],"summary":"No cross-channel mentions this week"}},{"clientName":"Breuninger - DE","clientSlug":"breuninger-de","csm":{"name":"Nils Eigenbrod"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"at_risk","healthScore":44,"narrative":"Breuninger had an onsite visit on March 19 for a strategic partnership kickoff, but trust concerns were raised around DY integration frustrations. An URGENT match rate ticket (P01) has been in progress for 19 days. The relationship needs careful management.","urgentPriorities":["URGENT match rate ticket (P01) — 19 days in progress","Address DY integration frustration"],"blockers":["URGENT P01 match rate ticket unresolved for 19 days","Trust concerns from client around DY integration"],"highlights":["Onsite visit March 19 — strategic partnership kickoff","Active engagement from client stakeholders"],"lowlights":["URGENT ticket open 19 days","Client trust concerns raised during onsite","DY integration frustration"],"prioritiesNextWeek":["Resolve P01 match rate ticket urgently","Follow up on strategic partnership action items","Address DY integration concerns"],"hubspot":{"available":true,"tickets":{"total":35,"open":3,"highOpen":1,"updatedThisWeek":2},"deals":[{"name":"Breuninger - DE - CDP - Renewal","stage":"Tracking","amount":120000,"active":true}]},"slack":{"available":true,"messagesThisWeek":6,"daysSinceLastMessage":2,"escalationSignals":["URGENT match rate ticket","DY integration frustration"],"keyTopics":["Onsite visit follow-up","Strategic partnership","DY integration","Match rate investigation"]},"crossChannel":{"mentions":3,"channels":["#support-tam","#csm-tam-product"],"summary":"Match rate ticket flagged as overdue. Trust concerns about DY integration discussed internally."}},{"clientName":"Kleinanzeigen (eBay)","clientSlug":"kleinanzeigen-ebay","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"at_risk","healthScore":52,"narrative":"Kleinanzeigen is very active with a HIGH data re-ingestion request (3/25), open Pubmatic audience inflation issue, and a PPID issue open for 132 days. Despite €541K renewal and €80K in upsells, the persistent technical issues create risk. Consent visibility discussions indicate growing data governance needs.","urgentPriorities":["Data re-ingestion request (HIGH, 3/25)","Pubmatic audiences inflated (MEDIUM, open)","PPID issue — 132 days open"],"blockers":["PPID issue unresolved for 132 days — awaiting engineering"],"highlights":["€541K renewal active","€80K in upsell pipeline","Active engagement with consent visibility discussions"],"lowlights":["PPID issue open 132 days","Pubmatic audience inflation unresolved","HIGH data re-ingestion request this week"],"prioritiesNextWeek":["Push PPID issue to resolution","Address Pubmatic audience inflation","Process data re-ingestion request"],"hubspot":{"available":true,"tickets":{"total":85,"open":5,"highOpen":1,"updatedThisWeek":4},"deals":[{"name":"Kleinanzeigen - CDP - Renewal","stage":"Tracking","amount":541000,"active":true},{"name":"Kleinanzeigen - Upsells","stage":"Pending Upsell","amount":80000,"active":true}]},"slack":{"available":true,"messagesThisWeek":10,"daysSinceLastMessage":1,"keyTopics":["Data re-ingestion","Pubmatic audiences","PPID issue","Consent visibility"]},"crossChannel":{"mentions":5,"channels":["#support-tam","#csm-tam-product"],"summary":"PPID issue flagged as stale (132d). Data re-ingestion and Pubmatic inflation discussed."}},{"clientName":"BayWa r.e.","clientSlug":"baywa-re","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"at_risk","healthScore":35,"narrative":"BayWa r.e. is in financial crisis with a contract shortening agreed — removing year 4 results in a €209K reduction. CDP usage is limited and the client's financial situation creates significant retention risk.","urgentPriorities":["Process contract shortening (year 4 removal = -€209K)","Monitor client financial situation"],"blockers":["Client financial crisis limiting CDP investment","Contract shortening agreed"],"highlights":["Proactive contract restructuring maintains relationship"],"lowlights":["Financial crisis impacting CDP usage","€209K revenue reduction from contract shortening","Limited platform adoption"],"prioritiesNextWeek":["Finalize contract amendment","Identify minimum viable use cases to maintain engagement"],"hubspot":{"available":true,"tickets":{"total":12,"open":1,"highOpen":0,"updatedThisWeek":0},"deals":[{"name":"BayWa r.e. - CDP - Renewal (shortened)","stage":"Tracking","amount":150000,"active":true}]},"slack":{"available":true,"messagesThisWeek":0,"daysSinceLastMessage":">7"},"crossChannel":{"mentions":1,"channels":["DMs"],"summary":"Financial crisis and contract shortening discussed internally"}},{"clientName":"Marktplaats","clientSlug":"marktplaats","csm":{"name":"Georgina West"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Peter Mielke","status":"on_track","healthScore":64,"narrative":"Marktplaats is in active implementation with 2 overdue tickets flagged in #support-tam (Databricks data and Odin nested field). The implementation is progressing but these technical blockers need attention to stay on schedule.","urgentPriorities":["Resolve overdue Databricks data ticket","Fix Odin nested field issue"],"blockers":["2 overdue tickets flagged in #support-tam"],"highlights":["Active implementation progressing","Good engagement with TAM team"],"lowlights":["2 overdue tickets in support-tam","Technical blockers on implementation"],"prioritiesNextWeek":["Clear overdue tickets","Continue implementation milestones"],"hubspot":{"available":true,"tickets":{"total":30,"open":4,"highOpen":0,"updatedThisWeek":3},"deals":[{"name":"Marktplaats - CDP - Renewal","stage":"Tracking","amount":200000,"active":true}]},"slack":{"available":true,"messagesThisWeek":5,"daysSinceLastMessage":2},"crossChannel":{"mentions":2,"channels":["#support-tam"],"summary":"2 overdue tickets flagged: Databricks data and Odin nested field"}},{"clientName":"Popken Fashion Group","clientSlug":"popken-fashion-group","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"on_track","healthScore":68,"narrative":"Popken Fashion Group is tracking steadily with low ticket volume and stable engagement. The account is in a maintenance phase with no significant escalations.","urgentPriorities":[],"blockers":[],"highlights":["Stable account with minimal support needs","Clean ticket pipeline"],"lowlights":["Limited expansion activity"],"prioritiesNextWeek":["Regular check-in","Identify growth opportunities"],"hubspot":{"available":true,"tickets":{"total":15,"open":1,"highOpen":0,"updatedThisWeek":0},"deals":[{"name":"Popken - CDP - Renewal","stage":"Tracking","amount":85000,"active":true}]},"slack":{"available":true,"messagesThisWeek":0,"daysSinceLastMessage":">7"},"crossChannel":{"mentions":0,"channels":[],"summary":"No cross-channel mentions this week"}},{"clientName":"CTS Eventim","clientSlug":"cts-eventim","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"stalled","healthScore":56,"narrative":"CTS Eventim is an Ultra Care account in active implementation (NCE model on Braze — a first for Zeotap). The dedicated channel has no messages this week, but cross-channel shows 2 new product/integration requests (Journey Enhancement P0, Permission Object Sync to Braze). The implementation push from Feb/March is now in a quieter consolidation phase.","urgentPriorities":["P0 Product Request: Journey Enhancement - Wait for Condition & Re-trigger","Integration Request: Permission Object Sync to Braze EU"],"blockers":[],"highlights":["Ultra Care account with dedicated monitoring","First-ever NCE model on Braze implementation","Renewal secured through 2029","2 new product/integration requests submitted this week"],"lowlights":["No Slack messages in dedicated channel this week","1 open ticket (Full Event History Data Export) lingering since Nov 2025"],"prioritiesNextWeek":["Follow up on Braze NCE go-live status","Track P0 Journey Enhancement request","Permission Object Sync integration timeline"],"hubspot":{"available":true,"tickets":{"total":15,"open":1,"highOpen":0,"updatedThisWeek":1,"openTickets":["INTEGRATE-SOURCES-Full Event History Data Export (updated 3/26)"]},"deals":[{"name":"CTS Eventim - Renewal - 31/12/2029","stage":"Tracking","amount":0,"active":true}]},"slack":{"available":true,"messagesThisWeek":0,"daysSinceLastMessage":">7","escalationSignals":[],"keyTopics":[]},"crossChannel":{"mentions":4,"channels":["#product-and-integration-requests","DMs Chris/Sarah"],"summary":"P0 Journey Enhancement request submitted. Permission Object Sync to Braze integration request. Status snapshot shared with Sarah by Chris. Ultra Care monitoring active."}},{"clientName":"Douglas - DE","clientSlug":"douglas-de","csm":{"name":"Georgina West"},"tam":{"name":"Raj Cheemakurti"},"owner":"Tobias Berghaus","status":"at_risk","healthScore":38,"narrative":"Douglas is an Ultra Care account under severe pressure with 2 URGENT open tickets (P0 Snowflake data pull for DE/AT/CH and BLOCKER deletion of P1 mapping in AT/PL/FR). The account has a history of being at risk of downgrading. A €272K renewal in negotiation and a €100K CDP Upgrade deal closing 3/31 need careful attention. 323 total tickets reflects the complexity of this multi-market account.","urgentPriorities":["P0 Data Pull for Snowflake Sources in DE, AT and CH (URGENT, open)","Douglas BLOCKER: Deletion of P1 Mapping in AT, PL, FR (URGENT, open)","€100K CDP Upgrade deal closing 3/31"],"blockers":["URGENT P0 Snowflake data pull blocking DE/AT/CH markets","URGENT P1 mapping deletion blocking AT/PL/FR markets"],"highlights":["Ultra Care account with dedicated critical monitoring channel","P0 Observation ticket closed 3/27 (HIGH)","TikTok match rates 125% ticket resolved","Stela confirmed fix starting with AT Snowflake sources"],"lowlights":["2 URGENT tickets open simultaneously","323 total tickets — second highest in portfolio","No messages in dedicated channel since Oct 2025","Account historically at risk of downgrading to Emarsys + in-house"],"prioritiesNextWeek":["Resolve both URGENT tickets","Close €100K CDP Upgrade deal by 3/31","Progress €272K renewal negotiation"],"hubspot":{"available":true,"tickets":{"total":323,"open":"many","highOpen":0,"urgentOpen":2,"updatedThisWeek":5,"recentOpen":["P0 Data Pull for Snowflake Sources DE/AT/CH (URGENT)","Douglas BLOCKER: Deletion of P1 Mapping AT/PL/FR (URGENT)","Custom fields mapping change"],"recentClosed":["P0 Observation of Audiences and Journeys (HIGH, closed 3/27)","TikTok match rates 125% (HIGH, closed 3/24)","P0 S1 Offline ingestion pull error (URGENT, closed 3/20)"]},"deals":[{"name":"Douglas - DE - CDP Premium;ID Extension - Renewal - 2026","stage":"Negotiation","amount":272496,"active":true},{"name":"Douglas - CDP Upgrade - Over Consumption, IDx, NCE, ID5","stage":"Contract Sent","amount":100000,"active":true},{"name":"Douglas - CDP - ID5/EUID Integration","stage":"Pending Upsell","amount":43636,"active":true},{"name":"Douglas - CDP - NCE","stage":"Pending Upsell","amount":60000,"active":true}]},"slack":{"available":true,"messagesThisWeek":0,"daysSinceLastMessage":">7","escalationSignals":[],"keyTopics":[]},"crossChannel":{"mentions":8,"channels":["#support-tam","#douglas_critical_monitoring_updates","#product-support-team-external","DMs"],"summary":"Support-tam: Stela confirmed starting AT Snowflake fix. Douglas critical monitoring alerts active. Product-support-team tracking Douglas alerts. Ultra Care pipeline digest mentions."}},{"clientName":"Virgin Media - UK","clientSlug":"virgin-media-uk","csm":{"name":"Georgina West"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Peter Mielke","status":"expanding","healthScore":72,"narrative":"Virgin Media (VMO2) is a flagship account (€3.25M renewal) showing strong momentum. Braze is now live as a destination in production, Web Chat profile API approved for production use, and Optimizely personalization testing showed positive results. Multiple new channels are opening up for Zeotap value delivery.","urgentPriorities":["Product request: Fixed IP address for export (P1, due 3/31)","Resolve stale archived audiences in Profile API ticket (231 days)"],"blockers":["P2 archived audiences appearing in Profile API — open 231 days"],"highlights":["€3.25M renewal — largest account by value","Braze destination live in production!","Web Chat profile API approved for production","Optimizely personalization test showing positive results","Lucy Armitage from Commercial team meeting for Q2 Braze roadmap"],"lowlights":["Stale ticket (archived audiences in Profile API) open 231 days","P1 fixed IP address request due 3/31"],"prioritiesNextWeek":["Map Q2 audiences for Braze delivery","Web Chat production deployment","Follow up with Lucy Armitage on Commercial roadmap","Resolve fixed IP address request by 3/31"],"hubspot":{"available":true,"tickets":{"total":180,"open":4,"highOpen":0,"updatedThisWeek":2},"deals":[{"name":"Virgin Media - UK - Renewal - 2026","stage":"Tracking","amount":3250000,"active":true}]},"slack":{"available":true,"messagesThisWeek":15,"daysSinceLastMessage":0,"lastMessageTimestamp":"2026-03-27","keyTopics":["Braze destination live in production","Web Chat profile API approved","Optimizely personalization testing","Q2 Commercial roadmap","Accenture alignment"],"escalationSignals":[]},"crossChannel":{"mentions":6,"channels":["#product-and-integration-requests","#support-tam","#csm-tam-product"],"summary":"P1 product request for fixed IP address export. Stale archived audiences ticket flagged in support-tam. VMO2 mentioned in activation flow standardization."}},{"clientName":"REWE - DE","clientSlug":"rewe-de","csm":{"name":"Sarah Fehrs"},"tam":{"name":"Stela Yoncheva"},"owner":"Chang Won Hwang","status":"stalled","healthScore":55,"narrative":"REWE has a complex support history (258 total tickets) and an overdue ticket on audience consent logic flagged in #support-tam. The Slack channel returned an error, creating a monitoring gap. Sarah confirmed REWE doesn't have audience boost licensed. A new integration request for Elaine and attribute sharing discussions in #csm-tam-product show the client is actively seeking to expand CDP capabilities.","urgentPriorities":["Overdue ticket: Audience Consent Logic follow-up (flagged in #support-tam)","Attribute sharing request — client wants to share attributes with destinations"],"blockers":["Slack channel not accessible (channel_not_found)","Consent logic ticket overdue — owner Vinamrutha, last activity 3/18"],"highlights":["€249.6K renewal active through 2028","New integration request (Elaine-ENH) submitted","Attribute sharing request shows growing sophistication"],"lowlights":["258 total tickets — high volume","Slack channel not found","Consent logic ticket overdue in #support-tam"],"prioritiesNextWeek":["Fix Slack channel access","Push consent logic ticket to resolution","Follow up on attribute sharing request"],"hubspot":{"available":true,"tickets":{"total":258,"open":"several","highOpen":0,"updatedThisWeek":2,"recentOpen":["Audience Consent Logic follow-up (MEDIUM)","Taboola custom audiences (in dev)","Source alerts pause (feature request)"]},"deals":[{"name":"REWE - DE - Renewal - 30/12/2028","stage":"Tracking","amount":249600,"active":true},{"name":"Rewe - CDP - UPSELL - JOURNEYS","stage":"Pending Upsell","amount":45000,"active":true},{"name":"REWE - CDP - Event Usage for Penny","stage":"Pending Upsell","amount":150000,"active":true},{"name":"Rewe - CDP DCR","stage":"Pending Upsell","amount":35000,"active":true}]},"slack":{"available":false,"error":"channel_not_found"},"crossChannel":{"mentions":4,"channels":["#support-tam","#csm-tam-product","#product-and-integration-requests"],"summary":"Overdue consent logic ticket flagged. Sarah confirmed no audience boost. Attribute sharing request discussed. New Elaine integration request submitted."}}]};
+  </script>
+
+  <!-- Dashboard Logic -->
+  <script>
+    // ── Constants ────────────────────────────────────────────────────────
+    const ROWS_PER_PAGE = 20;
+    const STATUS_CONFIG = {
+      on_track:   { label: 'On Track',   badgeClass: 'bg-success-container text-success-on-container', dotColor: '#386a20' },
+      at_risk:    { label: 'At Risk',    badgeClass: 'bg-error-container text-error-on-container',     dotColor: '#9f403d' },
+      stalled:    { label: 'Stalled',    badgeClass: 'bg-warning-container text-warning-on-container', dotColor: '#7d5700' },
+      expanding:  { label: 'Expanding',  badgeClass: 'bg-info-container text-primary-on-container',    dotColor: '#0c56d0' },
+    };
+    const STATUS_ORDER = { at_risk: 0, stalled: 1, on_track: 2, expanding: 3 };
+
+    // ── State ───────────────────────────────────────────────────────────
+    let filteredClients = [];
+    let currentPage = 1;
+    let sortColumn = 'healthScore';
+    let sortDirection = 'asc'; // worst first by default
+    let searchQuery = '';
+    let selectedCSM = '';
+
+    // ── Helpers ─────────────────────────────────────────────────────────
+    function relativeTime(isoString) {
+      if (!isoString) return 'N/A';
+      const now = new Date(DATA.reportDate + 'T23:59:59Z');
+      const then = new Date(isoString);
+      const diffMs = now - then;
+      if (diffMs < 0) return 'Just now';
+      const mins = Math.floor(diffMs / 60000);
+      if (mins < 60) return mins <= 1 ? 'Just now' : mins + ' mins ago';
+      const hours = Math.floor(mins / 60);
+      if (hours < 24) return hours === 1 ? '1 hour ago' : hours + ' hours ago';
+      const days = Math.floor(hours / 24);
+      if (days < 30) return days === 1 ? '1 day ago' : days + ' days ago';
+      const months = Math.floor(days / 30);
+      if (months < 12) return months === 1 ? '1 month ago' : months + ' months ago';
+      const years = Math.floor(months / 12);
+      return years === 1 ? '1 year ago' : years + ' years ago';
+    }
+
+    function healthColor(score) {
+      if (score >= 70) return '#386a20';
+      if (score >= 50) return '#7d5700';
+      return '#9f403d';
+    }
+
+    function healthBgColor(score) {
+      if (score >= 70) return '#b9f198';
+      if (score >= 50) return '#ffdea6';
+      return '#ffdad6';
+    }
+
+    function getTickets(client) {
+      return client.hubspot?.tickets?.total ?? 0;
+    }
+
+    function getOnboarding(client) {
+      if (client.rocketlane?.available && client.rocketlane?.overallProgress != null) {
+        return client.rocketlane.overallProgress;
+      }
+      return null;
+    }
+
+    function getLastActivity(client) {
+      return client.slack?.lastMessageTimestamp || null;
+    }
+
+    function getLastActivityDate(client) {
+      const ts = getLastActivity(client);
+      return ts ? new Date(ts) : new Date(0);
+    }
+
+    // ── Populate Summary ────────────────────────────────────────────────
+    function renderSummary() {
+      document.getElementById('week-label').textContent = DATA.weekLabel || '';
+      document.getElementById('total-clients').textContent = DATA.totalClients ?? DATA.clients?.length ?? 0;
+      document.getElementById('open-tickets-summary').textContent = (DATA.totalOpenTickets ?? 0) + ' open tickets across all clients';
+
+      const avgHealth = DATA.avgHealthScore ?? 0;
+      document.getElementById('avg-health').textContent = avgHealth;
+      document.getElementById('avg-health-bar').style.width = avgHealth + '%';
+
+      const sb = DATA.statusBreakdown || {};
+      document.getElementById('status-at-risk').textContent = sb.at_risk ?? 0;
+      document.getElementById('status-stalled').textContent = sb.stalled ?? 0;
+      document.getElementById('status-on-track').textContent = sb.on_track ?? 0;
+      document.getElementById('status-expanding').textContent = sb.expanding ?? 0;
+
+      document.getElementById('priority-at-risk').textContent = sb.at_risk ?? 0;
+      document.getElementById('priority-tickets').textContent = DATA.totalHighPriorityTickets ?? 0;
+      document.getElementById('priority-blockers').textContent = DATA.clientsWithBlockers ?? 0;
+
+      // Notification badge if at-risk > 0
+      if ((sb.at_risk ?? 0) > 0) {
+        document.getElementById('notif-badge').classList.remove('hidden');
+      }
+
+      // ── Executive Summary ──
+      renderExecSummary(sb);
+
+      // ── Top 5 Priorities ──
+      renderTopPriorities();
+    }
+
+    function renderExecSummary(sb) {
+      const clients = DATA.clients || [];
+      const total = clients.length;
+      const atRisk = sb.at_risk ?? 0;
+      const onTrack = sb.on_track ?? 0;
+      const expanding = sb.expanding ?? 0;
+      const stalled = sb.stalled ?? 0;
+      const avgHealth = DATA.avgHealthScore ?? 0;
+      const blockerClients = clients.filter(c => c.blockers && c.blockers.length > 0);
+      const silentClients = clients.filter(c => (c.slack?.daysSinceLastMessage ?? 0) > 7);
+      const highTickets = DATA.totalHighPriorityTickets ?? 0;
+
+      let parts = [];
+      parts.push(`This week across ${total} active clients, the average health score is ${avgHealth}/100.`);
+      if (onTrack > 0 || expanding > 0) parts.push(`${onTrack + expanding} clients are on track or expanding.`);
+      if (atRisk > 0) parts.push(`${atRisk} client${atRisk > 1 ? 's are' : ' is'} flagged at risk requiring immediate attention.`);
+      if (stalled > 0) parts.push(`${stalled} client${stalled > 1 ? 's have' : ' has'} stalled and need${stalled > 1 ? '' : 's'} re-engagement.`);
+      if (highTickets > 0) parts.push(`There are ${highTickets} high-priority support tickets open.`);
+      if (silentClients.length > 0) parts.push(`${silentClients.length} client channel${silentClients.length > 1 ? 's have' : ' has'} been silent for over a week.`);
+      if (blockerClients.length > 0) parts.push(`${blockerClients.length} client${blockerClients.length > 1 ? 's have' : ' has'} active blockers that need resolution.`);
+
+      document.getElementById('exec-summary').textContent = parts.join(' ');
+    }
+
+    function renderTopPriorities() {
+      const clients = DATA.clients || [];
+      const priorities = [];
+
+      // Collect all urgent priorities with client context
+      clients.forEach(c => {
+        (c.urgentPriorities || []).forEach(p => {
+          priorities.push({ text: p, client: c.clientName, slug: c.clientSlug, status: c.status, health: c.healthScore ?? 0 });
+        });
+        // Also surface critical blockers as priorities
+        (c.blockers || []).forEach(b => {
+          priorities.push({ text: b, client: c.clientName, slug: c.clientSlug, status: c.status, health: c.healthScore ?? 0, isBlocker: true });
+        });
+      });
+
+      // Sort: at_risk clients first, then by health score ascending (worst first)
+      priorities.sort((a, b) => {
+        const aRisk = a.status === 'at_risk' ? 0 : 1;
+        const bRisk = b.status === 'at_risk' ? 0 : 1;
+        if (aRisk !== bRisk) return aRisk - bRisk;
+        return a.health - b.health;
+      });
+
+      const top5 = priorities.slice(0, 5);
+      const list = document.getElementById('top-priorities-list');
+      list.innerHTML = '';
+
+      if (top5.length === 0) {
+        list.innerHTML = '<li class="text-sm text-on-surface-variant italic">No urgent priorities this week.</li>';
+        return;
+      }
+
+      top5.forEach((p, i) => {
+        const statusConf = STATUS_CONFIG[p.status] || STATUS_CONFIG.on_track;
+        const icon = p.isBlocker ? 'block' : 'flag';
+        const iconColor = p.isBlocker ? 'text-error' : 'text-warning';
+        const li = document.createElement('li');
+        li.className = 'flex items-start gap-3 p-3 rounded-lg bg-surface-container-low/50';
+        li.innerHTML = `
+          <span class="flex items-center justify-center w-6 h-6 rounded-full bg-surface-container text-xs font-bold text-on-surface-variant flex-shrink-0 mt-0.5">${i + 1}</span>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-on-surface">${p.text}</p>
+            <div class="flex items-center gap-2 mt-1">
+              <a href="clients/${p.slug}.html" class="text-xs font-semibold text-primary hover:underline">${p.client}</a>
+              <span class="status-badge ${statusConf.badgeClass}" style="font-size:0.6rem;padding:0.1rem 0.4rem;">${statusConf.label}</span>
+              ${p.isBlocker ? '<span class="text-xs text-error font-semibold flex items-center gap-0.5"><span class="material-symbols-outlined" style="font-size:12px">block</span>Blocker</span>' : ''}
+            </div>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    // ── CSM Filter ──────────────────────────────────────────────────────
+    function buildCSMFilter() {
+      const csms = new Set();
+      (DATA.clients || []).forEach(c => {
+        if (c.csm?.name) csms.add(c.csm.name);
+      });
+      const sorted = Array.from(csms).sort();
+      const container = document.getElementById('csm-filter-options');
+      container.innerHTML = '';
+
+      // "All CSMs" option
+      const allBtn = document.createElement('button');
+      allBtn.className = 'w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-high transition-colors';
+      allBtn.textContent = 'All CSMs';
+      allBtn.addEventListener('click', () => selectCSM(''));
+      container.appendChild(allBtn);
+
+      sorted.forEach(name => {
+        const btn = document.createElement('button');
+        btn.className = 'w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-high transition-colors';
+        btn.textContent = name;
+        btn.addEventListener('click', () => selectCSM(name));
+        container.appendChild(btn);
+      });
+    }
+
+    function selectCSM(name) {
+      selectedCSM = name;
+      document.getElementById('csm-filter-label').textContent = name || 'All CSMs';
+      document.getElementById('csm-filter-menu').classList.add('hidden');
+      currentPage = 1;
+      applyFilters();
+    }
+
+    // ── Filter + Sort ───────────────────────────────────────────────────
+    function applyFilters() {
+      let clients = DATA.clients || [];
+
+      // Search filter
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        clients = clients.filter(c =>
+          c.clientName.toLowerCase().includes(q) ||
+          (c.csm?.name || '').toLowerCase().includes(q)
+        );
+      }
+
+      // CSM filter
+      if (selectedCSM) {
+        clients = clients.filter(c => c.csm?.name === selectedCSM);
+      }
+
+      // Sort
+      clients = [...clients].sort((a, b) => {
+        let va, vb;
+        switch (sortColumn) {
+          case 'clientName':
+            va = a.clientName.toLowerCase();
+            vb = b.clientName.toLowerCase();
+            return sortDirection === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+          case 'csm':
+            va = (a.csm?.name || '').toLowerCase();
+            vb = (b.csm?.name || '').toLowerCase();
+            return sortDirection === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+          case 'healthScore':
+            va = a.healthScore ?? 0;
+            vb = b.healthScore ?? 0;
+            return sortDirection === 'asc' ? va - vb : vb - va;
+          case 'status':
+            va = STATUS_ORDER[a.status] ?? 99;
+            vb = STATUS_ORDER[b.status] ?? 99;
+            return sortDirection === 'asc' ? va - vb : vb - va;
+          case 'tickets':
+            va = getTickets(a);
+            vb = getTickets(b);
+            return sortDirection === 'asc' ? vb - va : va - vb;
+          case 'onboarding':
+            va = getOnboarding(a) ?? -1;
+            vb = getOnboarding(b) ?? -1;
+            return sortDirection === 'asc' ? va - vb : vb - va;
+          case 'lastActivity':
+            va = getLastActivityDate(a).getTime();
+            vb = getLastActivityDate(b).getTime();
+            return sortDirection === 'asc' ? va - vb : vb - va;
+          default:
+            return 0;
+        }
+      });
+
+      filteredClients = clients;
+      renderTable();
+      renderPagination();
+    }
+
+    // ── Render Table ────────────────────────────────────────────────────
+    function renderTable() {
+      const tbody = document.getElementById('client-table-body');
+      tbody.innerHTML = '';
+
+      const start = (currentPage - 1) * ROWS_PER_PAGE;
+      const pageClients = filteredClients.slice(start, start + ROWS_PER_PAGE);
+
+      const totalAll = DATA.clients?.length ?? 0;
+      document.getElementById('table-subtitle').textContent =
+        'Showing ' + filteredClients.length + ' of ' + totalAll + ' clients';
+
+      if (pageClients.length === 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="7" class="px-6 py-12 text-center text-on-surface-variant">' +
+          '<span class="material-symbols-outlined text-4xl text-outline-variant mb-2 block">search_off</span>' +
+          'No clients match your filters.</td>';
+        tbody.appendChild(tr);
+        return;
+      }
+
+      pageClients.forEach(client => {
+        const tr = document.createElement('tr');
+        tr.className = 'table-row border-b border-outline-variant/20';
+
+        const statusCfg = STATUS_CONFIG[client.status] || STATUS_CONFIG.on_track;
+        const health = client.healthScore ?? 0;
+        const tickets = getTickets(client);
+        const highTickets = client.hubspot?.tickets?.byPriority?.HIGH ?? 0;
+        const onboarding = getOnboarding(client);
+        const lastAct = getLastActivity(client);
+
+        tr.innerHTML =
+          // Client Name
+          '<td class="px-6 py-3.5">' +
+            '<a href="clients/' + encodeURIComponent(client.clientSlug || '') + '.html" class="text-sm font-semibold text-on-surface hover:text-primary transition-colors">' +
+              escapeHtml(client.clientName) +
+            '</a>' +
+          '</td>' +
+          // CSM
+          '<td class="px-4 py-3.5 text-sm text-on-surface-variant">' +
+            escapeHtml(client.csm?.name || 'Unassigned') +
+          '</td>' +
+          // Health Score
+          '<td class="px-4 py-3.5">' +
+            '<div class="flex items-center gap-2">' +
+              '<span class="text-sm font-semibold" style="color:' + healthColor(health) + '">' + health + '</span>' +
+              '<div class="w-16 h-1.5 rounded-full overflow-hidden" style="background:' + healthBgColor(health) + '">' +
+                '<div class="h-full rounded-full transition-all duration-500" style="width:' + health + '%;background:' + healthColor(health) + '"></div>' +
+              '</div>' +
+            '</div>' +
+          '</td>' +
+          // Status
+          '<td class="px-4 py-3.5">' +
+            '<span class="status-badge ' + statusCfg.badgeClass + '">' + statusCfg.label + '</span>' +
+          '</td>' +
+          // Open Tickets
+          '<td class="px-4 py-3.5">' +
+            '<span class="text-sm font-medium text-on-surface">' + tickets + '</span>' +
+            (highTickets > 0 ? ' <span class="text-xs text-error font-medium">(' + highTickets + ' high)</span>' : '') +
+          '</td>' +
+          // Onboarding
+          '<td class="px-4 py-3.5">' +
+            (onboarding !== null
+              ? '<div class="flex items-center gap-2">' +
+                  '<div class="w-16 h-1.5 progress-bar-track">' +
+                    '<div class="h-full rounded-full bg-primary transition-all duration-500" style="width:' + onboarding + '%"></div>' +
+                  '</div>' +
+                  '<span class="text-xs font-medium text-on-surface-variant">' + onboarding + '%</span>' +
+                '</div>'
+              : '<span class="text-xs text-on-surface-variant">N/A</span>'
+            ) +
+          '</td>' +
+          // Last Activity
+          '<td class="px-4 py-3.5 text-sm text-on-surface-variant">' +
+            relativeTime(lastAct) +
+          '</td>';
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // ── Pagination ──────────────────────────────────────────────────────
+    function renderPagination() {
+      const total = filteredClients.length;
+      const totalPages = Math.max(1, Math.ceil(total / ROWS_PER_PAGE));
+      const info = document.getElementById('pagination-info');
+      const controls = document.getElementById('pagination-controls');
+
+      if (total === 0) {
+        info.textContent = '';
+        controls.innerHTML = '';
+        return;
+      }
+
+      const start = (currentPage - 1) * ROWS_PER_PAGE + 1;
+      const end = Math.min(currentPage * ROWS_PER_PAGE, total);
+      info.textContent = 'Showing ' + start + '-' + end + ' of ' + total;
+
+      controls.innerHTML = '';
+
+      if (totalPages <= 1) return;
+
+      // Prev
+      const prevBtn = makePageBtn('chevron_left', currentPage > 1, () => goToPage(currentPage - 1));
+      controls.appendChild(prevBtn);
+
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        if (totalPages > 7 && i > 2 && i < totalPages - 1 && Math.abs(i - currentPage) > 1) {
+          if (i === 3 || i === totalPages - 2) {
+            const dots = document.createElement('span');
+            dots.className = 'px-2 text-xs text-on-surface-variant';
+            dots.textContent = '...';
+            controls.appendChild(dots);
+          }
+          continue;
+        }
+        const btn = document.createElement('button');
+        btn.className = i === currentPage
+          ? 'w-8 h-8 rounded-lg text-xs font-semibold bg-primary text-white'
+          : 'w-8 h-8 rounded-lg text-xs font-medium text-on-surface-variant hover:bg-surface-container-high transition-colors';
+        btn.textContent = i;
+        btn.addEventListener('click', () => goToPage(i));
+        controls.appendChild(btn);
+      }
+
+      // Next
+      const nextBtn = makePageBtn('chevron_right', currentPage < totalPages, () => goToPage(currentPage + 1));
+      controls.appendChild(nextBtn);
+    }
+
+    function makePageBtn(icon, enabled, onClick) {
+      const btn = document.createElement('button');
+      btn.className = 'w-8 h-8 rounded-lg flex items-center justify-center ' +
+        (enabled ? 'text-on-surface-variant hover:bg-surface-container-high transition-colors' : 'text-outline-variant cursor-default');
+      btn.innerHTML = '<span class="material-symbols-outlined text-lg">' + icon + '</span>';
+      if (enabled) btn.addEventListener('click', onClick);
+      return btn;
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      renderTable();
+      renderPagination();
+    }
+
+    // ── Sort Headers ────────────────────────────────────────────────────
+    function initSortHeaders() {
+      document.querySelectorAll('th.sortable').forEach(th => {
+        th.addEventListener('click', () => {
+          const col = th.dataset.sort;
+          if (sortColumn === col) {
+            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+          } else {
+            sortColumn = col;
+            sortDirection = 'asc';
+          }
+          // Update icons
+          document.querySelectorAll('th.sortable .sort-icon').forEach(icon => {
+            icon.classList.remove('active');
+            icon.textContent = 'unfold_more';
+          });
+          const activeIcon = th.querySelector('.sort-icon');
+          activeIcon.classList.add('active');
+          activeIcon.textContent = sortDirection === 'asc' ? 'expand_less' : 'expand_more';
+
+          currentPage = 1;
+          applyFilters();
+        });
+      });
+    }
+
+    // ── Search Input ────────────────────────────────────────────────────
+    function initSearch() {
+      const input = document.getElementById('search-input');
+      let debounce;
+      input.addEventListener('input', () => {
+        clearTimeout(debounce);
+        debounce = setTimeout(() => {
+          searchQuery = input.value.trim();
+          currentPage = 1;
+          applyFilters();
+        }, 200);
+      });
+    }
+
+    // ── CSM Filter Toggle ───────────────────────────────────────────────
+    function initCSMFilter() {
+      const btn = document.getElementById('csm-filter-btn');
+      const menu = document.getElementById('csm-filter-menu');
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target) && e.target !== btn) {
+          menu.classList.add('hidden');
+        }
+      });
+    }
+
+    // ── Init ────────────────────────────────────────────────────────────
+    function init() {
+      renderSummary();
+      buildCSMFilter();
+      initSortHeaders();
+      initSearch();
+      initCSMFilter();
+      applyFilters();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+
 </body>
 </html>

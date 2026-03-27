@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Detail — Client Insights</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container": "#e9edff",
+            "on-surface-variant": "#455f90",
+            "on-primary-container": "#004ab9",
+            "surface-container-highest": "#d8e2ff",
+            "surface": "#f9f9ff",
+            "surface-variant": "#d8e2ff",
+            "outline-variant": "#99b2e9",
+            "primary": "#0c56d0",
+            "on-background": "#143161",
+            "primary-container": "#dae2ff",
+            "error-container": "#fe8983",
+            "surface-container-lowest": "#ffffff",
+            "on-primary": "#f8f7ff",
+            "primary-dim": "#004aba",
+            "surface-container-low": "#f1f3ff",
+            "error": "#9f403d",
+            "outline": "#617aae",
+            "surface-container-high": "#e0e8ff",
+            "on-surface": "#143161"
+          },
+          fontFamily: {
+            "headline": ["Manrope", "system-ui", "sans-serif"],
+            "body": ["Inter", "system-ui", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Manrope', system-ui, sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .glass-header {
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background: rgba(249, 249, 255, 0.78);
+      border-bottom: 1px solid rgba(153, 178, 233, 0.3);
+    }
+    @keyframes gauge-fill { from { stroke-dasharray: 0 283; } }
+    .gauge-animate { animation: gauge-fill 1s ease-out forwards; }
+    .card {
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 3px rgba(20, 49, 97, 0.06), 0 1px 2px rgba(20, 49, 97, 0.04);
+      transition: box-shadow 0.2s ease;
+    }
+    .card:hover { box-shadow: 0 4px 12px rgba(20, 49, 97, 0.08), 0 2px 4px rgba(20, 49, 97, 0.04); }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen">
+
+  <!-- Data injection point -->
+  <script>
+    const CLIENT = {"clientName":"Breuninger - DE","clientSlug":"breuninger-de","csm":{"name":"Nils Eigenbrod"},"tam":{"name":"Shravan Maheshwaran"},"owner":"Chang Won Hwang","status":"at_risk","healthScore":44,"narrative":"Breuninger had an onsite visit on March 19 for a strategic partnership kickoff, but trust concerns were raised around DY integration frustrations. An URGENT match rate ticket (P01) has been in progress for 19 days. The relationship needs careful management.","urgentPriorities":["URGENT match rate ticket (P01) — 19 days in progress","Address DY integration frustration"],"blockers":["URGENT P01 match rate ticket unresolved for 19 days","Trust concerns from client around DY integration"],"highlights":["Onsite visit March 19 — strategic partnership kickoff","Active engagement from client stakeholders"],"lowlights":["URGENT ticket open 19 days","Client trust concerns raised during onsite","DY integration frustration"],"prioritiesNextWeek":["Resolve P01 match rate ticket urgently","Follow up on strategic partnership action items","Address DY integration concerns"],"hubspot":{"available":true,"tickets":{"total":35,"open":3,"highOpen":1,"updatedThisWeek":2},"deals":[{"name":"Breuninger - DE - CDP - Renewal","stage":"Tracking","amount":120000,"active":true}]},"slack":{"available":true,"messagesThisWeek":6,"daysSinceLastMessage":2,"escalationSignals":["URGENT match rate ticket","DY integration frustration"],"keyTopics":["Onsite visit follow-up","Strategic partnership","DY integration","Match rate investigation"]},"crossChannel":{"mentions":3,"channels":["#support-tam","#csm-tam-product"],"summary":"Match rate ticket flagged as overdue. Trust concerns about DY integration discussed internally."}};
+  </script>
+
+  <!-- Fixed Glass Header -->
+  <header class="glass-header fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" id="header-back-link">
+          <span class="material-symbols-outlined text-xl">arrow_back</span>
+        </a>
+        <div class="hidden sm:flex items-center gap-1.5 text-sm text-on-surface-variant">
+          <a href="../index.html" class="hover:text-primary transition-colors">Portfolio</a>
+          <span class="material-symbols-outlined text-base">chevron_right</span>
+          <span class="text-on-surface font-medium" id="breadcrumb-client"></span>
+        </div>
+        <span class="font-headline font-bold text-primary text-lg sm:hidden">Client Insights</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="window.print()" class="p-2 rounded-full hover:bg-surface-container transition-colors text-on-surface-variant" title="Print report">
+          <span class="material-symbols-outlined text-xl">print</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-16" id="main-content">
+    <!-- Content rendered by JavaScript -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-outline-variant/30 bg-surface-container-low">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-on-surface-variant">
+      <span>Generated by <strong class="text-primary font-medium">Client Insights</strong> &middot; <span id="footer-timestamp"></span></span>
+      <div class="flex items-center gap-1">
+        <span class="material-symbols-outlined text-base">schedule</span>
+        <span>Data refreshed weekly</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Utility helpers ───────────────────────────────────────────────
+    const $ = (sel) => document.querySelector(sel);
+    const el = (tag, attrs = {}, ...children) => {
+      const e = document.createElement(tag);
+      Object.entries(attrs).forEach(([k, v]) => {
+        if (k === 'className') e.className = v;
+        else if (k === 'innerHTML') e.innerHTML = v;
+        else if (k.startsWith('on')) e.addEventListener(k.slice(2).toLowerCase(), v);
+        else e.setAttribute(k, v);
+      });
+      children.forEach(c => {
+        if (typeof c === 'string') e.appendChild(document.createTextNode(c));
+        else if (c) e.appendChild(c);
+      });
+      return e;
+    };
+    const icon = (name, extra = '') => `<span class="material-symbols-outlined ${extra}">${name}</span>`;
+    const iconFilled = (name, extra = '') => `<span class="material-symbols-outlined filled ${extra}">${name}</span>`;
+
+    const statusConfig = {
+      on_track:   { label: 'On Track',  color: 'bg-emerald-100 text-emerald-800', dot: 'bg-emerald-500' },
+      at_risk:    { label: 'At Risk',   color: 'bg-red-100 text-red-800',         dot: 'bg-red-500' },
+      stalled:    { label: 'Stalled',   color: 'bg-amber-100 text-amber-800',     dot: 'bg-amber-500' },
+      expanding:  { label: 'Expanding', color: 'bg-blue-100 text-blue-800',       dot: 'bg-blue-500' }
+    };
+
+    function statusBadge(status) {
+      const s = statusConfig[status] || statusConfig.on_track;
+      return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${s.color}">
+        <span class="w-2 h-2 rounded-full ${s.dot}"></span>${s.label}
+      </span>`;
+    }
+
+    function healthGauge(score) {
+      const pct = Math.max(0, Math.min(100, score));
+      const circumference = 2 * Math.PI * 45;
+      const offset = circumference * (1 - pct / 100);
+      let strokeColor = '#059669';
+      if (pct < 50) strokeColor = '#dc2626';
+      else if (pct < 70) strokeColor = '#d97706';
+      return `
+        <svg viewBox="0 0 100 100" class="w-28 h-28 sm:w-32 sm:h-32 -rotate-90">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#e0e8ff" stroke-width="8" />
+          <circle cx="50" cy="50" r="45" fill="none" stroke="${strokeColor}" stroke-width="8"
+            stroke-linecap="round" stroke-dasharray="${circumference - offset} ${offset}"
+            class="gauge-animate" />
+        </svg>
+        <div class="absolute inset-0 flex flex-col items-center justify-center rotate-0">
+          <span class="text-3xl font-headline font-extrabold text-on-surface">${score}</span>
+          <span class="text-xs text-on-surface-variant font-medium -mt-0.5">/ 100</span>
+        </div>`;
+    }
+
+    function ticketStatusBadge(stage) {
+      const map = {
+        new:                  { label: 'NEW',              cls: 'bg-blue-100 text-blue-700' },
+        waiting_on_contact:   { label: 'WAITING',          cls: 'bg-amber-100 text-amber-700' },
+        in_progress:          { label: 'IN PROGRESS',      cls: 'bg-violet-100 text-violet-700' },
+        in_review:            { label: 'IN REVIEW',        cls: 'bg-indigo-100 text-indigo-700' },
+        queued:               { label: 'QUEUED',           cls: 'bg-gray-100 text-gray-600' },
+        closed:               { label: 'CLOSED',           cls: 'bg-emerald-100 text-emerald-700' }
+      };
+      const s = map[stage] || { label: stage.toUpperCase().replace(/_/g, ' '), cls: 'bg-gray-100 text-gray-600' };
+      return `<span class="px-2 py-0.5 rounded text-[10px] font-bold tracking-wide ${s.cls}">${s.label}</span>`;
+    }
+
+    // ─── Main render ───────────────────────────────────────────────────
+    function render() {
+      const c = CLIENT;
+      const main = $('#main-content');
+      $('#breadcrumb-client').textContent = c.clientName;
+      document.title = `${c.clientName} — Client Insights`;
+      $('#footer-timestamp').textContent = new Date(c.reportDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+      let html = '';
+
+      // ── Hero Section ──────────────────────────────────────────────
+      html += `
+      <section class="mb-8">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+          <div class="flex-1 min-w-0">
+            <h1 class="font-headline text-3xl sm:text-4xl font-extrabold text-on-surface leading-tight mb-2">${c.clientName}</h1>
+            <div class="flex flex-wrap items-center gap-3 text-sm text-on-surface-variant mb-4">
+              <span class="flex items-center gap-1">${icon('person', 'text-base')} CSM: <strong class="text-on-surface">${c.csm.name}</strong></span>
+              ${c.tam ? `<span class="text-outline-variant">|</span><span class="flex items-center gap-1">${icon('support_agent', 'text-base')} TAM: <strong class="text-on-surface">${c.tam.name}</strong></span>` : ''}
+              <span class="text-outline-variant">|</span>
+              <span class="flex items-center gap-1">${icon('calendar_today', 'text-base')} ${c.weekLabel}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              ${statusBadge(c.status)}
+              ${c.domain ? `<span class="text-xs text-on-surface-variant bg-surface-container px-2.5 py-1 rounded-full">${icon('language', 'text-sm')} ${c.domain}</span>` : ''}
+            </div>
+          </div>
+          <div class="flex-shrink-0">
+            <div class="card p-5 flex flex-col items-center gap-1">
+              <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">Health Score</span>
+              <div class="relative">${healthGauge(c.healthScore)}</div>
+            </div>
+          </div>
+        </div>
+        ${c.narrative ? `<div class="mt-6 card p-5"><p class="text-sm leading-relaxed text-on-surface-variant">${c.narrative}</p></div>` : ''}
+      </section>`;
+
+      // ── Goals & Strategy ──────────────────────────────────────────
+      if (c.goalsAndStrategy || c.hubspot?.deals?.active?.length > 0 || c.rocketlane?.available) {
+        const goals = c.goalsAndStrategy || {};
+        const hasObjective = goals.primaryObjective;
+        const hasStrategic = goals.strategicGoals && goals.strategicGoals.length > 0;
+        const hasNextMilestone = goals.nextMilestone;
+        const hasDeals = c.hubspot?.deals?.active?.length > 0;
+        const hasRocketlane = c.rocketlane?.available;
+
+        html += `
+        <section class="mb-6">
+          <div class="card p-6 border-l-4 border-primary">
+            <h3 class="font-headline font-bold text-base text-on-surface mb-4 flex items-center gap-2">
+              ${icon('flag', 'text-primary text-xl')} Goals & Strategy
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-4">
+                ${hasObjective ? `
+                  <div>
+                    <h4 class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Primary Objective</h4>
+                    <p class="text-sm text-on-surface">${goals.primaryObjective}</p>
+                  </div>` : ''}
+                ${hasStrategic ? `
+                  <div>
+                    <h4 class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Strategic Goals</h4>
+                    <ul class="space-y-1.5">
+                      ${goals.strategicGoals.map(g => `<li class="flex items-start gap-2 text-sm text-on-surface-variant">${icon('target', 'text-primary text-sm flex-shrink-0 mt-0.5')} ${g}</li>`).join('')}
+                    </ul>
+                  </div>` : ''}
+                ${hasNextMilestone ? `
+                  <div>
+                    <h4 class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Next Milestone</h4>
+                    <p class="text-sm text-on-surface">${goals.nextMilestone}</p>
+                  </div>` : ''}
+                ${!hasObjective && !hasStrategic && !hasNextMilestone ? '<p class="text-xs text-on-surface-variant italic">No explicit goals set. Goals are auto-derived from deal and onboarding context below.</p>' : ''}
+              </div>
+              <div class="space-y-4">
+                ${hasDeals ? `
+                  <div>
+                    <h4 class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Active Deals</h4>
+                    <div class="space-y-2">
+                      ${c.hubspot.deals.active.map(d => `
+                        <div class="flex items-center justify-between p-2.5 bg-surface-container-low rounded-lg">
+                          <span class="text-sm font-medium text-on-surface truncate">${d.name}</span>
+                          <div class="flex items-center gap-2 flex-shrink-0">
+                            <span class="text-xs text-on-surface-variant">${d.stage}</span>
+                            ${d.amount ? `<span class="text-xs font-bold text-primary">€${Number(d.amount).toLocaleString()}</span>` : ''}
+                          </div>
+                        </div>`).join('')}
+                    </div>
+                  </div>` : ''}
+                ${hasRocketlane ? `
+                  <div>
+                    <h4 class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Implementation Status</h4>
+                    <p class="text-sm text-on-surface">${c.rocketlane.currentPhase || 'In progress'} ${c.rocketlane.phaseOf ? `(Phase ${c.rocketlane.currentPhase?.match(/\\d+/)?.[0] || '?'} of ${c.rocketlane.phaseOf})` : ''} — ${c.rocketlane.overallProgress}% complete</p>
+                  </div>` : ''}
+              </div>
+            </div>
+          </div>
+        </section>`;
+      }
+
+      // ── Urgent Priorities ─────────────────────────────────────────
+      if (c.urgentPriorities && c.urgentPriorities.length > 0) {
+        html += `
+        <section class="mb-6">
+          <div class="rounded-full bg-red-50 border-l-4 border-error p-5">
+            <div class="flex items-center gap-2 mb-3">
+              ${icon('priority_high', 'text-error text-xl')}
+              <span class="text-xs font-bold tracking-widest text-error uppercase">Urgent Priorities</span>
+            </div>
+            <ul class="space-y-2">
+              ${c.urgentPriorities.map(p => `
+                <li class="flex items-start gap-2 text-sm text-on-surface">
+                  ${icon('arrow_right', 'text-error text-lg flex-shrink-0 mt-0.5')}
+                  <span>${p}</span>
+                </li>`).join('')}
+            </ul>
+          </div>
+        </section>`;
+      }
+
+      // ── Blockers ──────────────────────────────────────────────────
+      if (c.blockers && c.blockers.length > 0) {
+        html += `
+        <section class="mb-6">
+          <div class="rounded-full bg-gray-50 border-l-4 border-gray-400 p-5">
+            <div class="flex items-center gap-2 mb-3">
+              ${icon('block', 'text-gray-600 text-xl')}
+              <span class="text-xs font-bold tracking-widest text-gray-600 uppercase">Blockers</span>
+            </div>
+            <ul class="space-y-2">
+              ${c.blockers.map(b => `
+                <li class="flex items-start gap-2 text-sm text-on-surface">
+                  ${icon('warning', 'text-amber-500 text-lg flex-shrink-0 mt-0.5')}
+                  <span>${b}</span>
+                </li>`).join('')}
+            </ul>
+          </div>
+        </section>`;
+      }
+
+      // ── Onboarding Progress ───────────────────────────────────────
+      html += `<section class="mb-8">`;
+      if (c.rocketlane && c.rocketlane.available) {
+        const rl = c.rocketlane;
+        const pct = rl.overallProgress;
+        const phaseMatch = rl.currentPhase ? rl.currentPhase.match(/Phase\s*(\d+)/i) : null;
+        const phaseNum = phaseMatch ? phaseMatch[1] : '?';
+        html += `
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <h2 class="font-headline text-xl font-bold text-on-surface flex items-center gap-2">
+              ${icon('rocket_launch', 'text-primary')} Onboarding Progress
+            </h2>
+            <span class="px-3 py-1 rounded-full bg-primary-container text-on-primary-container text-xs font-bold">Phase ${phaseNum} of ${rl.phaseOf}</span>
+          </div>
+          <div class="card p-5 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-on-surface">${rl.currentPhase}</span>
+              <span class="text-sm font-bold text-primary">${pct}%</span>
+            </div>
+            <div class="w-full h-3 bg-surface-container rounded-full overflow-hidden">
+              <div class="h-full bg-primary rounded-full transition-all duration-700" style="width:${pct}%"></div>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-4 text-xs text-on-surface-variant">
+              <span>${icon('check_circle', 'text-emerald-500 text-sm')} ${rl.tasks.completed} completed</span>
+              <span>${icon('pending', 'text-blue-500 text-sm')} ${rl.tasks.inProgress} in progress</span>
+              ${rl.tasks.overdue > 0 ? `<span>${icon('error', 'text-error text-sm')} ${rl.tasks.overdue} overdue</span>` : ''}
+              ${rl.tasks.atRisk > 0 ? `<span>${icon('warning', 'text-amber-500 text-sm')} ${rl.tasks.atRisk} at risk</span>` : ''}
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="card p-5">
+              <h3 class="font-headline font-bold text-sm text-on-surface mb-3 flex items-center gap-2">
+                ${icon('history', 'text-primary text-lg')} Activity This Week
+              </h3>
+              <ul class="space-y-2.5 text-sm text-on-surface-variant">
+                <li class="flex items-center gap-2">${icon('task_alt', 'text-emerald-500 text-lg')} <span><strong class="text-on-surface">${rl.tasks.completedThisWeek}</strong> tasks completed</span></li>
+                ${c.hubspot && c.hubspot.available ? `
+                  <li class="flex items-center gap-2">${icon('groups', 'text-blue-500 text-lg')} <span><strong class="text-on-surface">${c.hubspot.engagements.meetingsHeld}</strong> meetings held</span></li>
+                  <li class="flex items-center gap-2">${icon('mail', 'text-violet-500 text-lg')} <span><strong class="text-on-surface">${c.hubspot.engagements.emailsSent + c.hubspot.engagements.emailsReceived}</strong> emails exchanged</span></li>
+                  <li class="flex items-center gap-2">${icon('call', 'text-teal-500 text-lg')} <span><strong class="text-on-surface">${c.hubspot.engagements.callsLogged}</strong> calls logged</span></li>
+                ` : ''}
+                ${c.slack && c.slack.available ? `
+                  <li class="flex items-center gap-2">${icon('chat', 'text-indigo-500 text-lg')} <span><strong class="text-on-surface">${c.slack.messagesThisWeek}</strong> Slack messages</span></li>
+                ` : ''}
+                ${c.drive && c.drive.available ? `
+                  <li class="flex items-center gap-2">${icon('description', 'text-amber-500 text-lg')} <span><strong class="text-on-surface">${c.drive.docsModifiedThisWeek}</strong> docs modified</span></li>
+                ` : ''}
+              </ul>
+            </div>
+            <div class="card p-5">
+              <h3 class="font-headline font-bold text-sm text-on-surface mb-3 flex items-center gap-2">
+                ${icon('upcoming', 'text-primary text-lg')} Priorities for Next Week
+              </h3>
+              ${c.prioritiesNextWeek && c.prioritiesNextWeek.length > 0 ? `
+                <ul class="space-y-2.5 text-sm">
+                  ${c.prioritiesNextWeek.map(p => `
+                    <li class="flex items-start gap-2 text-on-surface-variant">
+                      ${icon('chevron_right', 'text-primary text-lg flex-shrink-0')}
+                      <span>${p}</span>
+                    </li>`).join('')}
+                </ul>
+                ${rl.tasks.dueNextWeek ? `<p class="mt-3 text-xs text-on-surface-variant">${icon('event', 'text-sm')} ${rl.tasks.dueNextWeek} tasks due next week</p>` : ''}
+              ` : '<p class="text-sm text-on-surface-variant italic">No priorities set yet.</p>'}
+            </div>
+          </div>`;
+      } else {
+        html += `
+          <div class="flex items-center gap-2 mb-4">
+            <h2 class="font-headline text-xl font-bold text-on-surface flex items-center gap-2">
+              ${icon('rocket_launch', 'text-primary')} Onboarding Progress
+            </h2>
+          </div>
+          <div class="card p-8 text-center">
+            ${icon('cloud_off', 'text-3xl text-outline-variant')}
+            <p class="text-sm text-on-surface-variant mt-2">Onboarding data unavailable</p>
+          </div>`;
+      }
+      html += `</section>`;
+
+      // ── Engagement Stats Row ──────────────────────────────────────
+      if (c.hubspot && c.hubspot.available) {
+        const eng = c.hubspot.engagements;
+        html += `
+        <section class="mb-8">
+          <h2 class="font-headline text-xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            ${icon('monitoring', 'text-primary')} Engagement Summary
+          </h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+            <div class="card p-4 text-center">
+              <div class="text-2xl font-headline font-bold text-primary">${eng.emailsSent}</div>
+              <div class="text-xs text-on-surface-variant mt-1 flex items-center justify-center gap-1">${icon('send', 'text-sm')} Emails Sent</div>
+            </div>
+            <div class="card p-4 text-center">
+              <div class="text-2xl font-headline font-bold text-primary">${eng.emailsReceived}</div>
+              <div class="text-xs text-on-surface-variant mt-1 flex items-center justify-center gap-1">${icon('inbox', 'text-sm')} Received</div>
+            </div>
+            <div class="card p-4 text-center">
+              <div class="text-2xl font-headline font-bold text-primary">${eng.meetingsHeld}</div>
+              <div class="text-xs text-on-surface-variant mt-1 flex items-center justify-center gap-1">${icon('groups', 'text-sm')} Meetings</div>
+            </div>
+            <div class="card p-4 text-center">
+              <div class="text-2xl font-headline font-bold text-primary">${eng.callsLogged}</div>
+              <div class="text-xs text-on-surface-variant mt-1 flex items-center justify-center gap-1">${icon('call', 'text-sm')} Calls</div>
+            </div>
+            <div class="card p-4 text-center">
+              <div class="text-2xl font-headline font-bold text-primary">${eng.notesAdded}</div>
+              <div class="text-xs text-on-surface-variant mt-1 flex items-center justify-center gap-1">${icon('edit_note', 'text-sm')} Notes</div>
+            </div>
+          </div>
+        </section>`;
+      }
+
+      // ── Highlights / Lowlights ────────────────────────────────────
+      const hasHighlights = c.highlights && c.highlights.length > 0;
+      const hasLowlights = c.lowlights && c.lowlights.length > 0;
+      if (hasHighlights || hasLowlights) {
+        html += `
+        <section class="mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${hasHighlights ? `
+              <div class="card p-5 border-l-4 border-emerald-400 bg-emerald-50/40">
+                <h3 class="font-headline font-bold text-sm text-on-surface mb-3 flex items-center gap-2">
+                  ${iconFilled('star', 'text-emerald-500 text-lg')} Highlights
+                </h3>
+                <ul class="space-y-2">
+                  ${c.highlights.map(h => `
+                    <li class="flex items-start gap-2 text-sm text-on-surface-variant">
+                      ${icon('check', 'text-emerald-500 text-lg flex-shrink-0 mt-0.5')}
+                      <span>${h}</span>
+                    </li>`).join('')}
+                </ul>
+              </div>` : '<div></div>'}
+            ${hasLowlights ? `
+              <div class="card p-5 border-l-4 border-gray-300 bg-gray-50/40">
+                <h3 class="font-headline font-bold text-sm text-on-surface mb-3 flex items-center gap-2">
+                  ${icon('low_priority', 'text-gray-500 text-lg')} Lowlights
+                </h3>
+                <ul class="space-y-2">
+                  ${c.lowlights.map(l => `
+                    <li class="flex items-start gap-2 text-sm text-on-surface-variant">
+                      ${icon('remove', 'text-gray-400 text-lg flex-shrink-0 mt-0.5')}
+                      <span>${l}</span>
+                    </li>`).join('')}
+                </ul>
+              </div>` : '<div></div>'}
+          </div>
+        </section>`;
+      }
+
+      // ── Support Pipeline ──────────────────────────────────────────
+      if (c.hubspot && c.hubspot.available && c.hubspot.tickets) {
+        const t = c.hubspot.tickets;
+        const critCount = t.byPriority.HIGH || 0;
+        const featureCount = t.byPriority.MEDIUM || 0;
+        const generalCount = t.byPriority.LOW || 0;
+
+        html += `
+        <section class="mb-8">
+          <h2 class="font-headline text-xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            ${icon('support', 'text-primary')} Product Support Pipeline
+          </h2>
+          <div class="card p-5 mb-4">
+            <div class="flex flex-wrap items-center gap-4 mb-4">
+              <span class="text-sm font-medium text-on-surface">${t.total} total tickets</span>
+              <span class="flex items-center gap-1.5 text-xs font-semibold">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                ${critCount} Critical
+              </span>
+              <span class="flex items-center gap-1.5 text-xs font-semibold">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                ${featureCount} Medium
+              </span>
+              <span class="flex items-center gap-1.5 text-xs font-semibold">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span>
+                ${generalCount} Low
+              </span>
+            </div>
+            <div class="flex gap-1 h-2 rounded-full overflow-hidden bg-surface-container">
+              ${critCount > 0 ? `<div class="bg-red-500 rounded-full" style="width:${(critCount/t.total)*100}%"></div>` : ''}
+              ${featureCount > 0 ? `<div class="bg-amber-400 rounded-full" style="width:${(featureCount/t.total)*100}%"></div>` : ''}
+              ${generalCount > 0 ? `<div class="bg-blue-400 rounded-full" style="width:${(generalCount/t.total)*100}%"></div>` : ''}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+            ${Object.entries(t.byStage).map(([stage, count]) => `
+              <div class="card p-4 flex items-center justify-between">
+                <span class="text-sm text-on-surface-variant capitalize">${stage.replace(/_/g, ' ')}</span>
+                <div class="flex items-center gap-2">
+                  <span class="text-lg font-bold text-on-surface">${count}</span>
+                  ${ticketStatusBadge(stage)}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          ${t.criticalOpen && t.criticalOpen.length > 0 ? `
+            <div class="space-y-2">
+              <h3 class="text-sm font-semibold text-on-surface flex items-center gap-1.5 mb-2">
+                ${icon('error', 'text-error text-lg')} Critical Open Tickets
+              </h3>
+              ${t.criticalOpen.map(ticket => `
+                <div class="card p-4 border-l-4 border-error flex items-center justify-between">
+                  <span class="text-sm text-on-surface">${ticket}</span>
+                  ${ticketStatusBadge('in_progress')}
+                </div>`).join('')}
+            </div>` : ''}
+        </section>`;
+      }
+
+      // ── Deals (if available) ──────────────────────────────────────
+      if (c.hubspot && c.hubspot.available && c.hubspot.deals && c.hubspot.deals.active && c.hubspot.deals.active.length > 0) {
+        html += `
+        <section class="mb-8">
+          <h2 class="font-headline text-xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            ${icon('handshake', 'text-primary')} Active Deals
+          </h2>
+          <div class="space-y-3">
+            ${c.hubspot.deals.active.map(d => `
+              <div class="card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span class="font-medium text-on-surface">${d.name}</span>
+                  <span class="ml-2 px-2 py-0.5 rounded text-[10px] font-bold tracking-wide bg-primary-container text-on-primary-container">${d.stage.toUpperCase()}</span>
+                </div>
+                <span class="text-lg font-headline font-bold text-primary">$${d.amount.toLocaleString()}</span>
+              </div>`).join('')}
+          </div>
+        </section>`;
+      }
+
+      // ── Slack & Drive Insights ────────────────────────────────────
+      const hasSlack = c.slack && c.slack.available;
+      const hasDrive = c.drive && c.drive.available;
+      if (hasSlack || hasDrive) {
+        html += `
+        <section class="mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${hasSlack ? `
+              <div class="card p-5">
+                <h3 class="font-headline font-bold text-sm text-on-surface mb-3 flex items-center gap-2">
+                  ${icon('chat', 'text-indigo-500 text-lg')} Slack Activity
+                </h3>
+                <div class="space-y-2 text-sm text-on-surface-variant">
+                  <div class="flex justify-between"><span>Messages this week</span><strong class="text-on-surface">${c.slack.messagesThisWeek}</strong></div>
+                  <div class="flex justify-between"><span>Days since last message</span><strong class="text-on-surface">${c.slack.daysSinceLastMessage}</strong></div>
+                  ${c.slack.keyTopics && c.slack.keyTopics.length > 0 ? `
+                    <div class="pt-2 border-t border-outline-variant/20">
+                      <span class="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">Key Topics</span>
+                      <div class="flex flex-wrap gap-1.5 mt-1.5">
+                        ${c.slack.keyTopics.map(t => `<span class="px-2 py-0.5 bg-surface-container rounded-full text-xs">${t}</span>`).join('')}
+                      </div>
+                    </div>` : ''}
+                  ${c.slack.escalationSignals && c.slack.escalationSignals.length > 0 ? `
+                    <div class="pt-2 border-t border-outline-variant/20">
+                      <span class="text-xs font-semibold text-error uppercase tracking-wide">Escalation Signals</span>
+                      <ul class="mt-1.5 space-y-1">
+                        ${c.slack.escalationSignals.map(s => `<li class="flex items-start gap-1.5">${icon('warning', 'text-error text-sm')}<span class="text-xs">${s}</span></li>`).join('')}
+                      </ul>
+                    </div>` : ''}
+                </div>
+              </div>` : ''}
+            ${hasDrive ? `
+              <div class="card p-5">
+                <h3 class="font-headline font-bold text-sm text-on-surface mb-3 flex items-center gap-2">
+                  ${icon('folder', 'text-amber-500 text-lg')} Google Drive
+                </h3>
+                <div class="space-y-2 text-sm text-on-surface-variant">
+                  <div class="flex justify-between"><span>Docs modified this week</span><strong class="text-on-surface">${c.drive.docsModifiedThisWeek}</strong></div>
+                  ${c.drive.meetingNotesSummary ? `
+                    <div class="pt-2 border-t border-outline-variant/20">
+                      <span class="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">Meeting Notes</span>
+                      <p class="mt-1 text-xs leading-relaxed">${c.drive.meetingNotesSummary}</p>
+                    </div>` : ''}
+                  ${c.drive.recentDocs && c.drive.recentDocs.length > 0 ? `
+                    <div class="pt-2 border-t border-outline-variant/20">
+                      <span class="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">Recent Documents</span>
+                      <ul class="mt-1.5 space-y-1">
+                        ${c.drive.recentDocs.map(d => `
+                          <li class="flex items-center justify-between text-xs">
+                            <span class="flex items-center gap-1">${icon('description', 'text-sm text-blue-400')} ${d.name}</span>
+                            <span class="text-on-surface-variant">${new Date(d.modifiedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                          </li>`).join('')}
+                      </ul>
+                    </div>` : ''}
+                </div>
+              </div>` : ''}
+          </div>
+        </section>`;
+      }
+
+      // ── Data Sources Unavailable ──────────────────────────────────
+      if (c.dataSourcesUnavailable && c.dataSourcesUnavailable.length > 0) {
+        html += `
+        <section class="mb-8">
+          <div class="card p-4 bg-amber-50/50 border border-amber-200/50">
+            <div class="flex items-center gap-2 text-sm text-amber-700">
+              ${icon('info', 'text-lg')}
+              <span>Some data sources were unavailable: <strong>${c.dataSourcesUnavailable.join(', ')}</strong></span>
+            </div>
+          </div>
+        </section>`;
+      }
+
+      // ── Navigation Footer ─────────────────────────────────────────
+      html += `
+      <section class="pt-4 border-t border-outline-variant/20">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary-dim transition-colors">
+            ${icon('arrow_back', 'text-lg')} Back to Dashboard
+          </a>
+          <div class="flex items-center gap-3">
+            <button onclick="navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied!'))" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-primary bg-primary-container hover:bg-surface-container-highest transition-colors">
+              ${icon('share', 'text-lg')} Share Report
+            </button>
+            <button class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant bg-surface-container hover:bg-surface-container-highest transition-colors">
+              ${icon('history', 'text-lg')} View History
+            </button>
+          </div>
+        </div>
+      </section>`;
+
+      main.innerHTML = html;
+    }
+
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', render);
+    } else {
+      render();
+    }
+  </script>
+</body>
+</html>
